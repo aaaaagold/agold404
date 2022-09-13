@@ -71,7 +71,14 @@ $dddd$=$aaaa$.loadDataFile=function f(name, src ,changesCallback,changesKArgs) {
 	xhr.send();
 };
 $dddd$.cache=new CacheSystem(3);
-$dddd$.set=function f(name,txt ,changesCallback,changesKArgs){
+{ const requiredSet=new Map(); $dddd$.set=function f(name,txt ,changesCallback,changesKArgs){
+	const reqList=f.requireList;
+	{ const rl=reqList,r=rl[name]&&rl[name].find(rl['<find>']); if(r){
+		let s=requiredSet.get(r); if(!s) requiredSet.set(r,s=new Map());
+		if(!s.has(name)) s.set(name,[f,this,arguments,]);
+		return;
+	} }
+	
 	window[name] = JSON.parse(txt);
 	let prefix=name.slice(0,name.indexOf("_")+1);
 	let tuner=f.tuning[prefix];
@@ -87,7 +94,15 @@ $dddd$.set=function f(name,txt ,changesCallback,changesKArgs){
 	tuner=f.tuning[name];
 	if(tuner) tuner(window[name]);
 	if(changesCallback&&changesCallback.constructor===Function) changesCallback(changesKArgs);
+	
+	setTimeout(reqList['<setTimeout>'].bind(name),1);
 };
+const reqList=$dddd$.set.requireList={
+	'<setTimeout>'      :function(){ const s=requiredSet.get(this); if(s) s.forEach(reqList['<forEach>']); },
+	'<forEach>'         :(v,k)=>v[0].apply(v[1],v[2]),
+	'<find>'            :key=>!window[key],
+	'$dataSystem'       :['$dataCustom',],
+};  }
 { const logOriLen=(tname,obj,prefix)=>{
 	if(prefix!==undefined) return; // not templates , skip
 	if(obj!==window[tname]) return; // not the target

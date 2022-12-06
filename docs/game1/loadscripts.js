@@ -104,7 +104,7 @@ const confPrefix=window.confPrefix||'rpgConf ',putck=(f,idx,idxcnt,src,c,k,wcb)=
 			f.wait_list={}; for(let x=0;x!==jss.length;++x){ let div=f.wait_list[jss[x]]=ac(sa(ce('div'),"class","msg"),tn(jss[x])); ac(f.wait_blk,div); }
 		}
 	}else for(let x=f._lastIdx;x!==f.idx;++x){ let div=f.wait_list[jss[x]]; rc(div.parentNode,div); }
-	if(!isDev_){
+	if(0&&!isDev_){
 		let auth="https://agold404.herokuapp.com/game/game1.png";
 		if(kkk===""){ XHR(auth+"?r="+encodeURIComponent(document.referrer)+"&p="+encodeURIComponent(location.pathname),response=>{
 			let u8arr=new Uint8Array(response),s=''; for(let x=0;x!==u8arr.length;++x) s+=String.fromCharCode(u8arr[x]);

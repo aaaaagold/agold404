@@ -6,6 +6,24 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// 扣道具忘ㄌ傳參
+try{
+if(_agold404_version<'2024-03-10 1')(()=>{ let k,r,t;
+Game_Interpreter.prototype.cmdCommon_gainThings=function f(dataobjv,cal_kw){
+	const dataobj=dataobjv[this._params[0]];
+	let n=this.operateValue(this._params[1], this._params[2], this._params[3]);
+	if(0<n){
+		const v0=n;
+		for(let arr=$gameParty.members(),x=arr.length;x--;) n=Math.max(arr[x][cal_kw](v0,dataobj),n);
+	}
+	$gameParty.gainItem(dataobj,n|0,this._params[4]);
+	return true;
+};
+})();
+}catch(e){
+}
+// 扣道具忘ㄌ傳參
+
 // YEP卡條
 try{
 if(_agold404_version<'2024-03-10 0')(()=>{ let k,r,t;

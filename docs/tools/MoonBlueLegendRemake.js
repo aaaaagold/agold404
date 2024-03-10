@@ -40,6 +40,33 @@ r=p[k]; (p[k]=function f(){
 }
 // YEP卡條
 
+// 鎖定裝價格不應為 0 以避免又要再打一次 javascript
+try{
+(()=>{ let k,r,t;
+const p=Scene_Boot.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tuneLockedEquipPrice();
+	return rtv;
+}).ori=r;
+p.tuneLockedEquipPrice=()=>{
+	const c=Game_BattlerBase.TRAIT_EQUIP_LOCK;
+	const some_trait=trait=>trait.code===c;
+	const forEach_dataobj=dataobj=>{
+		const ts=dataobj&&dataobj.traits; if(!ts) return;
+		if(dataobj.price===0&&ts.some(some_trait)) dataobj.price=1e12; // 補償
+	};
+	[
+		$dataWeapons,
+		$dataArmors,
+	].forEach(arr=>arr.forEach(forEach_dataobj));
+};
+})();
+}catch(e){
+}
+// 鎖定裝價格不應為 0 以避免又要再打一次 javascript
+
 // 問卷
 try{
 (()=>{ let k,r,t;

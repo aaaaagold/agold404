@@ -6,6 +6,33 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// 如如ㄉ裝是在所尛
+try{
+(()=>{ let k,r,t;
+const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tune如如裝();
+	return rtv;
+}).ori=r;
+p.tune如如裝=()=>{
+	const c=Game_BattlerBase.TRAIT_EQUIP_LOCK;
+	const forEach_trait=trait=>trait.code===c&&(trait.code=-404);
+	const forEach_dataobj=function(id){ const dataobj=this[id];
+		const ts=dataobj&&dataobj.traits; if(!ts) return;
+		if(ts) ts.forEach(forEach_trait);
+	};
+	[
+		[$dataArmors,[60,620,360,906],],
+		[$dataWeapons,[180],],
+	].forEach(kv=>kv[1].forEach(forEach_dataobj.bind(kv[0])));
+};
+})();
+}catch(e){
+}
+// 如如ㄉ裝是在所尛
+
 // 扣道具忘ㄌ傳參
 try{
 if(_agold404_version<'2024-03-10 1')(()=>{ let k,r,t;
@@ -43,7 +70,7 @@ r=p[k]; (p[k]=function f(){
 // 鎖定裝價格不應為 0 以避免又要再打一次 javascript
 try{
 (()=>{ let k,r,t;
-const p=Scene_Boot.prototype;
+const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){
 	const rtv=f.ori.apply(this,arguments);

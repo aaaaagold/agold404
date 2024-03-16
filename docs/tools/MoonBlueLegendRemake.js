@@ -6,6 +6,26 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// 白粉說明文
+try{
+(()=>{ let k,r,t;
+const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tune白粉說明文();
+	return rtv;
+}).ori=r;
+p.tune白粉說明文=()=>{
+	const item=$dataItems.filter(dataobj=>dataobj&&dataobj.name==="白粉")[0];
+	const meta=item.meta;
+	meta.道具額外文字檔=meta.道具額外文字檔.replace(/(?<=BLR_custom\/detail\/item\/Items)[0-9]+(?=\.txt)/g,item.id);
+};
+})();
+}catch(e){
+}
+// 白粉說明文
+
 // 如如ㄉ裝是在所尛
 try{
 (()=>{ let k,r,t;

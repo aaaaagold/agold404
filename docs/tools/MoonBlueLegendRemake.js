@@ -114,6 +114,47 @@ p.tuneLockedEquipPrice=()=>{
 }
 // 鎖定裝價格不應為 0 以避免又要再打一次 javascript
 
+
+// map hot fix
+try{
+if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
+const p=Game_Event.prototype;
+k='update';
+r=p[k]; (p[k]=function f(){
+	return this.event()&&f.ori.apply(this,arguments);
+}).ori=r;
+})();
+if(Utils.isNwjs() && _agold404_version<'2024-03-22 0')(()=>{ let k,r,t;
+const p=XMLHttpRequest.prototype;
+k='open';
+r=p[k]; (p[k]=function f(method, url, async, user, password){
+	let tmp;
+	if(tmp=this.hotFix_maps(url)) arguments[1]=tmp;
+	return f.ori.apply(this,arguments);
+}).ori=r;
+(p.hotFix_maps=function f(url){
+	const m=url&&url.match&&url.match(f.tbl[0]); if(!m) return;
+	if(!f.tbl[1].has(m[1]-0)) return;
+	return f.tbl[2]+m[0];
+}).tbl=[
+/^data\/Map([0-9]+)\.json$/,
+new Set([
+1, // test
+8, // 俯瞰
+255, // 輪盤
+360, // 白虎洞
+396, // 鴿房
+398, // 房
+400, // 圖房
+]),
+"https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
+];
+})();
+}catch(e){
+}
+// data hot fix
+
+
 // 問卷
 try{
 (()=>{ let k,r,t;

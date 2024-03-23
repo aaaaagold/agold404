@@ -2,6 +2,7 @@
 
 (()=>{ try{
 if(window._isHotfixDisabled) return;
+const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
 const _agold404_version=window._agold404_version;
 
 // hot fix
@@ -115,7 +116,7 @@ p.tuneLockedEquipPrice=()=>{
 // 鎖定裝價格不應為 0 以避免又要再打一次 javascript
 
 
-// map hot fix
+// data hot fix
 try{
 if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
 const p=Game_Event.prototype;
@@ -124,8 +125,11 @@ r=p[k]; (p[k]=function f(){
 	return this.event()&&f.ori.apply(this,arguments);
 }).ori=r;
 })();
-if(Utils.isNwjs() && _agold404_version<'2024-03-22 0')(()=>{ let k,r,t;
-const p=XMLHttpRequest.prototype;
+if((_agold404_dbg_nwjs||Utils.isNwjs()) && _agold404_version<'2024-03-22 0')(()=>{ let k,r,t;
+t=[
+"https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
+];
+{ const p=XMLHttpRequest.prototype;
 k='open';
 r=p[k]; (p[k]=function f(method, url, async, user, password){
 	let tmp;
@@ -135,7 +139,7 @@ r=p[k]; (p[k]=function f(method, url, async, user, password){
 (p.hotFix_maps=function f(url){
 	const m=url&&url.match&&url.match(f.tbl[0]); if(!m) return;
 	if(!f.tbl[1].has(m[1]-0)) return;
-	return f.tbl[2]+m[0];
+	return f.tbl[2][0]+m[0];
 }).tbl=[
 /^data\/Map([0-9]+)\.json$/,
 new Set([
@@ -147,8 +151,37 @@ new Set([
 398, // 房
 400, // 圖房
 ]),
-"https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
+t,
 ];
+}
+{ const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tuneDatabase();
+	return rtv;
+}).ori=r;
+(p.tuneDatabase=function f(){
+	try{
+		f.tbl[1].slice().forEach(f.tbl[2].bind(f.tbl));
+	}catch(e){
+	}
+}).tbl=[
+t,
+[
+["CommonEvents.json",arr=>{
+	if(!$dataCommonEvents) return;
+	const xs=arr&&arr.length; if(0<xs){ for(let x=0;x!==xs;++x){ if(arr[x] && $dataCommonEvents[x]) $dataCommonEvents[x].list=arr[x].list; } }
+}],
+],
+function(info){
+	jurl(this[0][0]+"data/"+info[0],"GET",undefined,undefined,undefined,txt=>{
+		this[1].uniquePop(info);
+		info[1](JSON.parse(txt));
+	});
+},
+];
+}
 })();
 }catch(e){
 }

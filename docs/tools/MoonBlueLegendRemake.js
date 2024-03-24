@@ -118,6 +118,13 @@ p.tuneLockedEquipPrice=()=>{
 
 // data hot fix
 try{
+if(_agold404_version<'2024-03-24 1')(()=>{ let k,r,t;
+const p=Game_Event.prototype;
+k='findProperPageIndex';
+r=p[k]; (p[k]=function f(){
+	return this.event()?f.ori.apply(this,arguments):-1;
+}).ori=r;
+})();
 if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
 const p=Game_Event.prototype;
 k='update';

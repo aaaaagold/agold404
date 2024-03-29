@@ -7,6 +7,28 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// update popupMsg
+try{
+if(_agold404_version<'2024-03-29 1')(()=>{ let k,r,t;
+const p=Game_Temp.prototype;
+k='popupMsg';
+t=p[k].tbl;
+(p[k]=function f(msg,opt){
+	// opt = {loc:"LU/LD/RU/RD/UL/DL/UR/DR"}
+	opt=opt||f.tbl[0];
+	const root=this._popupMsg_getCont(opt); if(!root) return;
+	msg+='';
+	const lines=msg.split('\n');
+	const wnd=new Window_PopupMsg(lines.length,opt);
+	wnd.width=root._maxWidth;
+	wnd.setText(msg);
+	root.addChild(wnd);
+}).tbl=t;
+})();
+}catch(e){
+}
+// update popupMsg
+
 // 白粉說明文
 try{
 (()=>{ let k,r,t;
@@ -220,6 +242,35 @@ r=p[k]; (p[k]=function f(){
 }catch(e){
 }
 // 問卷
+
+// 小訊息
+try{
+(()=>{ let k,r,t;
+const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tinyTitleOnlyMsg();
+	return rtv;
+}).ori=r;
+(p.tinyTitleOnlyMsg=function f(){
+	if(!(Math.random()*f.tbl[0]<1)) return;
+	const arr=f.tbl[1];
+	const info=arr.rnd1();
+	$gameTemp.popupMsg(info[1],info[0]);
+}).tbl=[
+1024, // 0:
+[
+[ {loc:"LU",showFrame:289}, "黃金：「我在北北基桃的某處上班，\n　　　　每天上班、午休、下班，\n　　　　都要吸到二手菸，我快死ㄌ。」" ],
+[ {loc:"LU",showFrame:369}, "黃金：「讓路人吸到二手菸，算不算一種隨機傷人？」" ],
+[ {loc:"LU",showFrame:123}, "黃金：「麥克風測試 123 。」" ],
+[ {loc:"LU",showFrame:444}, "黃金：「有了按下 F12 的 DevTools ，誰還在用魔法書？」" ],
+], // 1:
+];
+})();
+}catch(e){
+}
+// 小訊息
 
 // ---- ---- ---- ----
 

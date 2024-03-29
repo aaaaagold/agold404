@@ -254,7 +254,7 @@ r=p[k]; (p[k]=function f(){
 	return rtv;
 }).ori=r;
 (p.tinyTitleOnlyMsg=function f(){
-	if(!(Math.random()*f.tbl[0]<1)) return;
+	if(!ConfigManager.allClear||!(Math.random()*f.tbl[0]<1)) return;
 	const arr=f.tbl[1];
 	const info=arr.rnd1();
 	$gameTemp.popupMsg(info[1],info[0]);

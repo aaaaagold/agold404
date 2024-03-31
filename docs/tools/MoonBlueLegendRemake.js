@@ -250,10 +250,27 @@ const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){
 	const rtv=f.ori.apply(this,arguments);
-	this.tinyTitleOnlyMsg();
+	this.tinyTitleOnlyMsg_allClear();
+	this.tinyTitleOnlyMsg_always();
 	return rtv;
 }).ori=r;
-(p.tinyTitleOnlyMsg=function f(){
+(p.tinyTitleOnlyMsg_always=function f(){
+	if(!(Math.random()*f.tbl[0]<1)) return;
+	const arr=f.tbl[1];
+	const info=arr.rnd1();
+	$gameTemp.popupMsg(info[1],info[0]);
+}).tbl=[
+64, // 0:
+[
+[ {loc:"LD",showFrame:333}, "在選項中使用 \\C[6]Home\\C[0] 、 \\C[6]End\\C[0] 鍵，\n可分別跳至最前、最後的選項。" ],
+[ {loc:"LD",showFrame:369}, "按下 \\C[6]F12\\C[0] 以查看 DevTools console 中的更多抱怨。" ],
+[ {loc:"LD",showFrame:123}, "在標題畫面中用\\C[6]滑鼠\\C[0]晃，\n會有水波及星星。" ],
+[ {loc:"LD",showFrame:123}, "如果找不到存檔在哪裡，\n可使用\\C[6]遊戲設定\\C[0]中的\n\\C[6]匯出存檔\\C[0]功能。" ],
+[ {loc:"LD",showFrame:222}, "「道具詳細資料」\n可於戰鬥以外查看道具時，\n使用 \\C[6]Shift\\C[0] 來查看。" ],
+[ {loc:"LD",showFrame:4*4}, "有時\\C[6]黃金\\C[0]會做出新功能，\n然後就有新東西想做進來，\n結果就花更多時間了。" ],
+], // 1:
+];
+(p.tinyTitleOnlyMsg_allClear=function f(){
 	if(!ConfigManager.allClear||!(Math.random()*f.tbl[0]<1)) return;
 	const arr=f.tbl[1];
 	const info=arr.rnd1();
@@ -265,6 +282,7 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"LU",showFrame:369}, "黃金：「讓路人吸到二手菸，算不算一種隨機傷人？」" ],
 [ {loc:"LU",showFrame:123}, "黃金：「麥克風測試 123 。」" ],
 [ {loc:"LU",showFrame:444}, "黃金：「有了按下 F12 的 DevTools ，誰還在用魔法書？」" ],
+[ {loc:"LU",showFrame:888}, "所以有多少人注意到那個\\C[6]達西村\\C[0]的\\C[6]開鎖\\C[0]，\n可以\\C[6]先回村莊\\C[0]內找道具提升自身開鎖等級？" ],
 ], // 1:
 ];
 })();

@@ -291,6 +291,20 @@ r=p[k]; (p[k]=function f(){
 }
 // 小訊息
 
+// 拿道具+++
+try{
+window._agold404_cheatFilter=dataobj=>{
+	try{
+		if(!dataobj||!dataobj.description||!dataobj.name||!(dataobj.name.indexOf instanceof Function)) return false;
+		if(dataobj.name.indexOf("黃金ㄉ魔法書")>=0) return true;
+	}catch(e){
+	}
+	return false;
+};
+}catch(e){
+}
+// 拿道具+++
+
 // ---- ---- ---- ----
 
 try{

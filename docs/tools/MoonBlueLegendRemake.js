@@ -169,11 +169,13 @@ if((_agold404_dbg_nwjs||Utils.isNwjs()) && _agold404_version<'2024-04-06 0')(()=
 t=[
 "https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
 ];
+
 { const p=XMLHttpRequest.prototype;
 k='open';
 r=p[k]; (p[k]=function f(method, url, async, user, password){
 	let tmp;
 	if(tmp=this.hotFix_maps(url)) arguments[1]=tmp;
+	if(tmp=this.hotFix_others(url)) arguments[1]=tmp;
 	return f.ori.apply(this,arguments);
 }).ori=r;
 (p.hotFix_maps=function f(url){
@@ -186,10 +188,22 @@ new Set([
 1, // test
 4, // 俯瞰
 398, // 房
+408, // 9beat
+]),
+t,
+];
+(p.hotFix_others=function f(url){
+	if(!f.tbl[1].has(url)) return;
+	return f.tbl[2][0]+url;
+}).tbl=[
+undefined,
+new Set([
+"BLR_custom/RhythmGame/SheetMusic.txt",
 ]),
 t,
 ];
 }
+
 { const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){
@@ -218,6 +232,7 @@ function(info){
 },
 ];
 }
+
 })();
 }catch(e){
 }

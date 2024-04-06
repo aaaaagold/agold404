@@ -259,7 +259,7 @@ r=p[k]; (p[k]=function f(){
 
 // 小訊息
 try{
-(()=>{ let k,r,t;
+if(!Utils.isOptionValid('test'))(()=>{ let k,r,t;
 const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){

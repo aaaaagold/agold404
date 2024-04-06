@@ -344,6 +344,24 @@ window._agold404_cheatFilter=dataobj=>{
 }
 // 拿道具+++
 
+// 特定地圖的 Sprite_Character 於螢幕外時不畫
+try{
+(()=>{ let k,r,t;
+const p=Sprite_Character.prototype;
+k='renderCanvas';
+r=p[k];
+(p[k]=function f(){
+	return (!f.tbl.has($gameMap&&$gameMap.mapId())||this.isInScreen_local()) && f.ori.apply(this,arguments);
+}).ori=r;
+p[k].tbl=new Set([
+307, // 滑雪
+375, // 青龍洞
+]);
+})();
+}catch(e){
+}
+// 特定地圖的 Sprite_Character 於螢幕外時不畫
+
 // ---- ---- ---- ----
 
 try{

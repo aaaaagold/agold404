@@ -348,15 +348,22 @@ window._agold404_cheatFilter=dataobj=>{
 try{
 (()=>{ let k,r,t;
 const p=Sprite_Character.prototype;
+t=new Set([
+307, // 滑雪
+375, // 青龍洞
+]);
 k='renderCanvas';
 r=p[k];
 (p[k]=function f(){
 	return (!f.tbl.has($gameMap&&$gameMap.mapId())||this.isInScreen_local()) && f.ori.apply(this,arguments);
 }).ori=r;
-p[k].tbl=new Set([
-307, // 滑雪
-375, // 青龍洞
-]);
+p[k].tbl=t;
+k='renderWebGL';
+r=p[k];
+(p[k]=function f(){
+	return (!f.tbl.has($gameMap&&$gameMap.mapId())||this.isInScreen_local()) && f.ori.apply(this,arguments);
+}).ori=r;
+p[k].tbl=t;
 })();
 }catch(e){
 }

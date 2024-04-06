@@ -29,53 +29,6 @@ t=p[k].tbl;
 }
 // update popupMsg
 
-// 白粉說明文
-try{
-(()=>{ let k,r,t;
-const p=Scene_Title.prototype;
-k='start';
-r=p[k]; (p[k]=function f(){
-	const rtv=f.ori.apply(this,arguments);
-	this.tune白粉說明文();
-	return rtv;
-}).ori=r;
-p.tune白粉說明文=()=>{
-	const item=$dataItems.filter(dataobj=>dataobj&&dataobj.name==="白粉")[0];
-	const meta=item.meta;
-	meta.道具額外文字檔=meta.道具額外文字檔.replace(/(?<=BLR_custom\/detail\/item\/Items)[0-9]+(?=\.txt)/g,item.id);
-};
-})();
-}catch(e){
-}
-// 白粉說明文
-
-// 如如ㄉ裝是在所尛
-try{
-(()=>{ let k,r,t;
-const p=Scene_Title.prototype;
-k='start';
-r=p[k]; (p[k]=function f(){
-	const rtv=f.ori.apply(this,arguments);
-	this.tune如如裝();
-	return rtv;
-}).ori=r;
-p.tune如如裝=()=>{
-	const c=Game_BattlerBase.TRAIT_EQUIP_LOCK;
-	const forEach_trait=trait=>trait.code===c&&(trait.code=-404);
-	const forEach_dataobj=function(id){ const dataobj=this[id];
-		const ts=dataobj&&dataobj.traits; if(!ts) return;
-		if(ts) ts.forEach(forEach_trait);
-	};
-	[
-		[$dataArmors,[60,620,360,906],],
-		[$dataWeapons,[180],],
-	].forEach(kv=>kv[1].forEach(forEach_dataobj.bind(kv[0])));
-};
-})();
-}catch(e){
-}
-// 如如ㄉ裝是在所尛
-
 // 扣道具忘ㄌ傳參
 try{
 if(_agold404_version<'2024-03-10 1')(()=>{ let k,r,t;

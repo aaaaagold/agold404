@@ -165,7 +165,7 @@ r=p[k]; (p[k]=function f(){
 	return this.event()&&f.ori.apply(this,arguments);
 }).ori=r;
 })();
-if((_agold404_dbg_nwjs||Utils.isNwjs()) && _agold404_version<'2024-03-22 0')(()=>{ let k,r,t;
+if((_agold404_dbg_nwjs||Utils.isNwjs()) && _agold404_version<'2024-04-06 0')(()=>{ let k,r,t;
 t=[
 "https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
 ];
@@ -184,12 +184,8 @@ r=p[k]; (p[k]=function f(method, url, async, user, password){
 /^data\/Map([0-9]+)\.json$/,
 new Set([
 1, // test
-8, // 俯瞰
-255, // 輪盤
-360, // 白虎洞
-396, // 鴿房
+4, // 俯瞰
 398, // 房
-400, // 圖房
 ]),
 t,
 ];

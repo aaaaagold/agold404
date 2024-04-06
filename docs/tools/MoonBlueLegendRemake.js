@@ -231,7 +231,10 @@ r=p[k]; (p[k]=function f(){
 	
 	if(tw._openResponseForm_opened) return;
 	if(!(Math.random()*f.tbl[0]<1)) return;
-	w.open("https://docs.google.com/forms/d/e/1FAIpQLSeNj8kwKvZweS1vNNq4pdfKpjijFgidpIqjcKWipeh8lsXA_Q/viewform",f.tbl[1],f.tbl[2]);
+	let url="https://docs.google.com/forms/d/e/1FAIpQLSeNj8kwKvZweS1vNNq4pdfKpjijFgidpIqjcKWipeh8lsXA_Q/viewform?usp=pp_url&entry.992516390=插件版本:%20{}%0A%0A";
+	const pluginVer=encodeURIComponent(_agold404_version||"未偵測到");
+	url=url.replace("{}",pluginVer);
+	w.open(url,f.tbl[1],f.tbl[2]);
 	tw._openResponseForm_opened=true;
 }).tbl=[
 128,

@@ -384,6 +384,29 @@ p[k].tbl=t;
 }
 // 特定地圖的 Sprite_Character 於螢幕外時不畫
 
+// death count
+try{
+(()=>{ let k,r,t;
+const p=Game_BattlerBase.prototype;
+if(p.addDeathCount) return;
+k='die';
+r=p[k];
+(p[k]=function f(){
+	this.addDeathCount(1);
+	return f.ori.apply(this,arguments);
+}).ori=r;
+p.addDeathCount=function(delta){
+	this._deathCount-=0; if(!this._deathCount) this._deathCount=0;
+	return this._deathCount+=delta;
+};
+p.getDeathCount=function(){
+	return this._deathCount-0||0;
+};
+})();
+}catch(e){
+}
+// death count
+
 // ---- ---- ---- ----
 
 try{

@@ -7,6 +7,26 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// undefined in items should not be returned
+try{
+if(_agold404_version<'2024-04-09 0')(()=>{ let k,r,t;
+const p=Game_Party.prototype;
+t=x=>x!==undefined;
+k='items';
+r=p[k]; (p[k]=function f(){
+	return f.ori.apply(this,arguments).filter(f._filter);
+}).ori=r;
+p[k]._filter=t;
+k='equipItems';
+r=p[k]; (p[k]=function f(){
+	return f.ori.apply(this,arguments).filter(f._filter);
+}).ori=r;
+p[k]._filter=t;
+})();
+}catch(e){
+}
+// undefined in items should not be returned
+
 // clear april fools
 try{
 if(_agold404_version<'2024-04-08 0')(()=>{ let k,r,t;

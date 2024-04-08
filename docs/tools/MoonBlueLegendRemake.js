@@ -7,6 +7,32 @@ const _agold404_version=window._agold404_version;
 
 // hot fix
 
+// clear april fools
+try{
+if(_agold404_version<'2024-04-08 0')(()=>{ let k,r,t;
+
+const dt=new Date();
+const m=dt.getMonth(); // 0-base
+const d=dt.getDate(); // 1-base
+const cond=(m===2&&d===31)||(m===3&&d<9);
+if(cond) return;
+
+const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.clearAprilFools();
+	return rtv;
+}).ori=r;
+p.clearAprilFools=()=>{ const dataobj=$dataStates[1];
+	if(!dataobj) return;
+	dataobj.traits.length=0;
+};
+})();
+}catch(e){
+}
+// clear april fools
+
 // update popupMsg
 try{
 if(_agold404_version<'2024-03-29 1')(()=>{ let k,r,t;

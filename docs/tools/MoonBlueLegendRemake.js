@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 (()=>{ try{
+if(Utils.isOptionValid('test')) return;
 if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)) return;
 const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;
 if(window._isHotfixDisabled) return;

@@ -80,7 +80,7 @@ t=p[k].tbl;
 
 // 道具地圖
 try{
-if(_agold404_version<'2024-03-22 0')(()=>{ let k,r,t;
+if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
 const p=Sprite_Minimap.prototype;
 r=p.paintAll;
 t=r.tbl;
@@ -200,21 +200,7 @@ p.tuneLockedEquipPrice=()=>{
 
 // data hot fix
 try{
-if(_agold404_version<'2024-03-24 1')(()=>{ let k,r,t;
-const p=Game_Event.prototype;
-k='findProperPageIndex';
-r=p[k]; (p[k]=function f(){
-	return this.event()?f.ori.apply(this,arguments):-1;
-}).ori=r;
-})();
-if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
-const p=Game_Event.prototype;
-k='update';
-r=p[k]; (p[k]=function f(){
-	return this.event()&&f.ori.apply(this,arguments);
-}).ori=r;
-})();
-if((_agold404_dbg_nwjs||Utils.isNwjs()) && _agold404_version<'2024-04-06 0')(()=>{ let k,r,t;
+(()=>{ let k,r,t;
 t=[
 "https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
 ];
@@ -235,22 +221,26 @@ r=p[k]; (p[k]=function f(method, url, async, user, password){
 /^data\/Map([0-9]+)\.json$/,
 new Set([
 1, // test
-4, // 俯瞰
 398, // 房
-408, // 9beat
 ]),
 t,
 ];
+if(_agold404_version<'2024-04-06 1') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
+4, // 俯瞰前存檔
+408, // 9beat
+]));
 (p.hotFix_others=function f(url){
 	if(!f.tbl[1].has(url)) return;
 	return f.tbl[2][0]+url;
 }).tbl=[
 undefined,
 new Set([
-"BLR_custom/RhythmGame/SheetMusic.txt",
 ]),
 t,
 ];
+if(_agold404_version<'2024-04-06 1') p.hotFix_others.tbl[1].union_inplaceThis(new Set([
+"BLR_custom/RhythmGame/SheetMusic.txt",
+]));
 }
 
 { const p=Scene_Title.prototype;
@@ -339,7 +329,9 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"LD",showFrame:333}, "在選項中使用 \\C[6]Home\\C[0] 、 \\C[6]End\\C[0] 鍵，\n可分別跳至最前、最後的選項。" ],
 [ {loc:"LD",showFrame:369}, "按下 \\C[6]F12\\C[0] 鍵以查看 DevTools console 中的更多抱怨。" ],
 [ {loc:"LD",showFrame:369}, "按下 \\C[6]F2\\C[0] 鍵時，\n第 1 次會顯示 FPS ，\n第 2 次會顯示每幀延遲，\n第 3 次就關掉上述顯示了。" ],
+[ {loc:"LD",showFrame:123}, "按下 \\C[6]F3\\C[0] 鍵時，\n可進入畫面自動縮放模式。" ],
 [ {loc:"LD",showFrame:123}, "按下 \\C[6]F4\\C[0] 鍵時，\n可進入全螢幕模式。" ],
+[ {loc:"LD",showFrame:123}, "按下 \\C[6]F5\\C[0] 鍵時，\n會回到標題畫面。" ],
 [ {loc:"LD",showFrame:123}, "在標題畫面中用\\C[6]滑鼠\\C[0]晃，\n會有水波及星星。" ],
 [ {loc:"LD",showFrame:123}, "如果找不到存檔在哪裡，\n可使用\\C[6]遊戲設定\\C[0]中的\n\\C[6]匯出存檔\\C[0]功能。" ],
 [ {loc:"LD",showFrame:222}, "「道具詳細資料」\n可於戰鬥以外查看道具時，\n使用 \\C[6]Shift\\C[0] 鍵來查看。" ],

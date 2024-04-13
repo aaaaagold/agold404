@@ -2,7 +2,16 @@
 
 (()=>{ try{
 if(Utils.isOptionValid('test')) return;
-if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)) return;
+if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
+	if(!(Date.now()<1744744744744)){
+		const r=SceneManager.goto;
+		(SceneManager.goto=function f(scctor){
+			if(scctor) return f.ori.call(this,Scene_Options);
+			else return f.ori.apply(this,arguments);
+		}).ori=r;
+	} 
+	return;
+}
 const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;
 if(window._isHotfixDisabled) return;
 const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;

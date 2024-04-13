@@ -1,7 +1,8 @@
 ﻿"use strict";
 
 (()=>{ try{
-if(Utils.isOptionValid('test')) return;
+const isTest=Utils.isOptionValid('test');
+const isNwjs=Utils.isNwjs();
 if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
 	if(!(Date.now()<1744744744744)){
 		const r=SceneManager.goto;
@@ -16,6 +17,7 @@ const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;
 if(window._isHotfixDisabled) return;
 const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
 const _agold404_version=window._agold404_version;
+
 
 // hot fix
 
@@ -87,82 +89,6 @@ t=p[k].tbl;
 }
 // update popupMsg
 
-// 道具地圖
-try{
-if(_agold404_version<'2024-03-22 1')(()=>{ let k,r,t;
-const p=Sprite_Minimap.prototype;
-r=p.paintAll;
-t=r.tbl;
-(p[k]=function f(x,y,w,h){
-	// unit: grid
-	if(this.initData()) return;
-	if(x===undefined||x<0) x=0;
-	if(y===undefined||y<0) y=0;
-	if(w===undefined||(w>=$dataMap.width  -x)) w=$dataMap.width  -x;
-	if(h===undefined||(h>=$dataMap.height -y)) h=$dataMap.height -y;
-	
-	const bmp=this.bitmap; if(!bmp) return;
-	
-	const j0=y,je=y+h;
-	const i0=x,ie=x+w;
-	const limX=f.tbl[3][0](),dx0=Math.max(~~(w/limX),1);
-	const limY=f.tbl[3][1](),dy0=Math.max(~~(h/limY),1);
-	let dx=dx0,dy=dy0;
-	if(f.tbl[4](dx0,dy0)!==1){
-		if(dx===dy||Math.max(dx,dy)<4) ++dy;
-	}
-	//if(window._dbg) console.log(dx0,dy0,f.tbl[4](dx0,dy0),'',dx,dy,f.tbl[4](dx,dy)); // debug
-	const W=$dataMap.width<<1,dt=this._drawTimeoutMs,arr=[];
-	const ctr0=0<dt?3e0|0:Infinity;
-	let timesup=false,tF=0;
-	do{
-		this._strtDy|=0; ++this._strtDy; this._strtDy%=dy;
-		this._strtDx|=0; ++this._strtDx; this._strtDx%=dx;
-		for(let j=j0+this._strtDy;j<je;j+=dy) for(let i=i0+this._strtDx;i<ie;i+=dx) if(!this.painted(i,j)) arr.uniquePush(j*W+i);
-		//this._remainedTileCnt=arr.length;
-		this._currDrawTileCnt=arr.length;
-		if(!this._currDrawTileCnt) break;
-		if(!tF) tF=0<dt?Date.now()+dt:Infinity;
-		for(let ctr=ctr0;!timesup&&arr.length;){
-			const curr=arr[~~(Math.random()*arr.length)];
-			arr.uniquePop(curr);
-			const i=curr%W,j=~~(curr/W);
-			for(let z=0;z<4;++z){
-				const tileId=$gameMap.tileId(i,j,z); if(!Tilemap.isVisibleTile(tileId)) continue;
-				Tilemap.isAutotile(tileId)?this._drawAutotile(bmp, tileId, i*this._tileWidth, j*this._tileHeight):this._drawNormalTile(bmp, tileId, i*this._tileWidth, j*this._tileHeight);
-			}
-			this.painted_setVal(i,j,true);
-			if(!(0<--ctr)){
-				ctr=ctr0;
-				const t=Date.now();
-				if(tF<t){ timesup=true; break; }
-			}
-		}
-	}while(!timesup&&(1<dx||1<dy)); // don't use !arr.length : might be the last that meets time's up.
-}).tbl=t;
-})();
-}catch(e){
-}
-// 道具地圖
-
-// 扣道具忘ㄌ傳參
-try{
-if(_agold404_version<'2024-03-10 1')(()=>{ let k,r,t;
-Game_Interpreter.prototype.cmdCommon_gainThings=function f(dataobjv,cal_kw){
-	const dataobj=dataobjv[this._params[0]];
-	let n=this.operateValue(this._params[1], this._params[2], this._params[3]);
-	if(0<n){
-		const v0=n;
-		for(let arr=$gameParty.members(),x=arr.length;x--;) n=Math.max(arr[x][cal_kw](v0,dataobj),n);
-	}
-	$gameParty.gainItem(dataobj,n|0,this._params[4]);
-	return true;
-};
-})();
-}catch(e){
-}
-// 扣道具忘ㄌ傳參
-
 // YEP卡條
 try{
 if(_agold404_version<'2024-03-10 0')(()=>{ let k,r,t;
@@ -181,7 +107,7 @@ r=p[k]; (p[k]=function f(){
 
 // 鎖定裝價格不應為 0 以避免又要再打一次 javascript
 try{
-(()=>{ let k,r,t;
+if(!isTest)(()=>{ let k,r,t;
 const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){
@@ -209,7 +135,7 @@ p.tuneLockedEquipPrice=()=>{
 
 // data hot fix
 try{
-(()=>{ let k,r,t;
+if(!isTest)(()=>{ let k,r,t;
 t=[
 "https://raw.githubusercontent.com/aaaaagold/MBR_data/main/",
 ];
@@ -289,7 +215,7 @@ function(info){
 
 // 問卷
 try{
-(()=>{ let k,r,t;
+if(!isTest)(()=>{ let k,r,t;
 const p=Scene_Title.prototype;
 k='initialize';
 r=p[k]; (p[k]=function f(){
@@ -318,7 +244,7 @@ r=p[k]; (p[k]=function f(){
 
 // 小訊息
 try{
-if(!Utils.isOptionValid('test'))(()=>{ let k,r,t;
+if(!isTest)(()=>{ let k,r,t;
 const p=Scene_Title.prototype;
 k='start';
 r=p[k]; (p[k]=function f(){
@@ -392,7 +318,7 @@ r=p[k];
 
 // 拿道具+++
 try{
-window._agold404_cheatFilter=dataobj=>{
+if(!isTest) window._agold404_cheatFilter=dataobj=>{
 	try{
 		try{
 			if(!window._agold404_bonusCheatItem && window.$dataItems) window._agold404_bonusCheatItem=window.$dataItems.filter(x=>x&&x.name&&x.description&&x.occasion===0).rnd1();
@@ -411,8 +337,8 @@ window._agold404_cheatFilter=dataobj=>{
 
 // 數玩家
 try{
-setTimeout(()=>{
-Utils.isNwjs() && eeee(d.call(L,"C4Jwng3gUAFAZgVwHYGNgEsD2SAEcYCU06+AhDAIYgDmCAtgKZLADOA2gAwC6AfALwcCBHCAbAEIXPgAsHaQQDcUEjA4AeKrUbN23YaPGS8lGvSatOXALQBGRVBTYWwHABM+rho88BVAEoAkgDCmHQADtjmADQoKHwMAG4UADYwAO7oSK6YaQB0AFYSybnAmADKoJnUhARRANYMYHwA5GEULB0MDK7NUYzAABaY7gBEAAoA8mUAKiNRRXwjA8DAYSwAXAD0mywoIOhhwLnUmJjUyQy5jnSbdBR7mCw7mwCCANJwYCgARmAIABJgAAy0wA+mMAIovfJ+HwAR3QFCBCAAGgBZdDTADMKKBmBQHBR0wAmi9pAgAFLAACsVnQADlKWMACIATiBACEgsSxkgABxpMCuLEBN4+akMkAALzSmwYAA8vCMlCpkviUhVMCAKNRLrrgAFgAw6DAGmAhCIxBIkEoLi5gOEFDgIDhHEhnDg6nwzQBqZpWFhdHpOh1hPhqlAa0ra3XHMSG42mxQ4FSkUPCCNRrU6y6Bg1Gk11KKhvjfUoUGBoiiDXLarKhQglcqVJDVAi5FjJdAoBiqKI2ABs7bargAolkYIOos0OM0CH6rM0fTBmdXLkgco3ShV9q2ah2uz2+zYsUJkwBfBxOFyB7p8UNRVzViiLW+jH1vpSJFIwVwwEagGAACkADsHJARwLzwMgaBYEgQEAEwcPgBCgeBkGpiYWjmCwQHUhyHB4cyQFYqOJHMoIqFIQY1qIchMCyPIJHoS8KiEViQSaGYOh4QRRFURwNGSHR+BcdorC8YR1LMrYqFYix36pH+iEIYBiHUmB6mQdBqAYNg6lISh6maQh1IYWQWHcRJpn4YRNnEaZpHqViFFCAZglWsJpmGQxchUdS8laax+B2QFnGmOJuE2Xx9n+dRnnwd59FiTh6m2WlMl2M54GmZBsQwEUBlBP0QyuEVoUIUET7ABQ5VFcA8rAM5DkBaOMANU1jktS5zXNJgdRzgZA5DTAmbJJqMa5vGBamo0RXNDYc5uY5OVmS8xnMgQhDZUFG2RsAKADDADD+SZa0bSpbmBZBoGbdt13rSBzL7Ydx2oZpN1PSMQhKOeW32OeL1HSd0DnkAA="));
+!isTest && isNwjs && setTimeout(()=>{
+eeee(d.call(L,"C4Jwng3gUAFAZgVwHYGNgEsD2SAEcYCU06+AhDAIYgDmCAtgKZLADOA2gAwC6AfALwcCBHCAbAEIXPgAsHaQQDcUEjA4AeKrUbN23YaPGS8lGvSatOXALQBGRVBTYWwHABM+rho88BVAEoAkgDCmHQADtjmADQoKHwMAG4UADYwAO7oSK6YaQB0AFYSybnAmADKoJnUhARRANYMYHwA5GEULB0MDK7NUYzAABaY7gBEAAoA8mUAKiNRRXwjA8DAYSwAXAD0mywoIOhhwLnUmJjUyQy5jnSbdBR7mCw7mwCCANJwYCgARmAIABJgAAy0wA+mMAIovfJ+HwAR3QFCBCAAGgBZdDTADMKKBmBQHBR0wAmi9pAgAFLAACsVnQADlKWMACIATiBACEgsSxkgABxpMCuLEBN4+akMkAALzSmwYAA8vCMlCpkviUhVMCAKNRLrrgAFgAw6DAGmAhCIxBIkEoLi5gOEFDgIDhHEhnDg6nwzQBqZpWFhdHpOh1hPhqlAa0ra3XHMSG42mxQ4FSkUPCCNRrU6y6Bg1Gk11KKhvjfUoUGBoiiDXLarKhQglcqVJDVAi5FjJdAoBiqKI2ABs7bargAolkYIOos0OM0CH6rM0fTBmdXLkgco3ShV9q2ah2uz2+zYsUJkwBfBxOFyB7p8UNRVzViiLW+jH1vpSJFIwVwwEagGAACkADsHJARwLzwMgaBYEgQEAEwcPgBCgeBkGpiYWjmCwQHUhyHB4cyQFYqOJHMoIqFIQY1qIchMCyPIJHoS8KiEViQSaGYOh4QRRFURwNGSHR+BcdorC8YR1LMrYqFYix36pH+iEIYBiHUmB6mQdBqAYNg6lISh6maQh1IYWQWHcRJpn4YRNnEaZpHqViFFCAZglWsJpmGQxchUdS8laax+B2QFnGmOJuE2Xx9n+dRnnwd59FiTh6m2WlMl2M54GmZBsQwEUBlBP0QyuEVoUIUET7ABQ5VFcA8rAM5DkBaOMANU1jktS5zXNJgdRzgZA5DTAmbJJqMa5vGBamo0RXNDYc5uY5OVmS8xnMgQhDZUFG2RsAKADDADD+SZa0bSpbmBZBoGbdt13rSBzL7Ydx2oZpN1PSMQhKOeW32OeL1HSd0DnkAA="));
 },1);
 }catch(e){
 }

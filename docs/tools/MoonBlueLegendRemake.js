@@ -132,6 +132,28 @@ p.tuneLockedEquipPrice=()=>{
 }
 // 鎖定裝價格不應為 0 以避免又要再打一次 javascript
 
+// refresh_do should avoid removed drawMaskSp
+try{
+if(_agold404_version<'2024-04-14 0')(()=>{ let k,r,t;
+const p=PIXI.Container.prototype;
+k='drawMask_set_WebGL';
+r=p[k]; (p[k]=function f(){
+	this.drawMask_set_WebGL_fixRefresh();
+	return f.ori.apply(this,arguments);
+}).ori=r;
+((p.drawMask_set_WebGL_fixRefresh=function f(){
+	if(!this._drawMaskSp) return;
+	this._drawMaskSp.refresh_do=f.tbl[0];
+}).tbl=[
+function f(){
+	return this.parent&&f.ori.apply(this,arguments);
+},
+])[0].ori=Sprite.prototype.refresh_do;
+})();
+}catch(e){
+}
+// refresh_do should avoid removed drawMaskSp
+
 
 // data hot fix
 try{

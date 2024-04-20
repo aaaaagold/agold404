@@ -186,6 +186,10 @@ if(_agold404_version<'2024-04-06 1') p.hotFix_maps.tbl[1].union_inplaceThis(new 
 4, // 俯瞰前存檔
 408, // 9beat
 ]));
+if(_agold404_version<'2024-04-15 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
+182, // 貪吃蛇
+426, // 貪吃蛇
+]));
 (p.hotFix_others=function f(url){
 	if(!f.tbl[1].has(url)) return;
 	return f.tbl[2][0]+url;
@@ -293,6 +297,7 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"LD",showFrame:123}, "如果找不到存檔在哪裡，\n可使用\\C[6]遊戲設定\\C[0]中的\n\\C[6]匯出存檔\\C[0]功能。" ],
 [ {loc:"LD",showFrame:222}, "「道具詳細資料」\n可於戰鬥以外查看道具時，\n使用 \\C[6]Shift\\C[0] 鍵來查看。" ],
 [ {loc:"LD",showFrame:444}, "DEBUG 不是通靈，而是查找。\n更何況這遊戲不是 1 人完成。\n任何疑難雜症請盡量提供更多資訊過來。" ],
+[ {loc:"LD",showFrame:4444}, "此遊戲並沒有將所有檔案打包成 1 個 exe ，\n因此玩家可以在遊戲的 www 資料夾用 python \n開一個簡易 http 伺服器，並用\\C[6]瀏覽器\\C[0]來玩。\n\npython2: python -m SimpleHTTPServer\npython3: python -m http.server" ],
 [ {loc:"LD",showFrame:7777}, "按下 \\C[6]F12\\C[0] 至 console 輸入以下，立即解鎖加速功能：\n\\C[6]ConfigManager.canFrameFastForward=true;\\C[0]" ],
 [ {loc:"LD",showFrame:4*4}, "有時\\C[6]黃金\\C[0]會做出新功能，\n然後就有新東西想做進來，\n結果就花更多時間了。" ],
 ], // 1:

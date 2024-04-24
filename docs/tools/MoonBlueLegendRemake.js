@@ -3,6 +3,27 @@
 (()=>{ try{
 const isTest=Utils.isOptionValid('test');
 const isNwjs=Utils.isNwjs();
+const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;
+if(window._isHotfixDisabled) return;
+const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
+const _agold404_version=window._agold404_version;
+const _agold404_isFromCache=window._agold404_isFromCache;
+
+
+// hot fix
+
+
+(()=>{ // ==== gugugu ==== 
+
+
+
+
+})(); // ==== gugugu END ==== 
+
+
+(()=>{ // ==== bye ==== 
+
+
 if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
 	if(!(Date.now()<1744744744744)){
 		const r=SceneManager.goto;
@@ -10,16 +31,11 @@ if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
 			if(scctor) return f.ori.call(this,Scene_Options);
 			else return f.ori.apply(this,arguments);
 		}).ori=r;
-	} 
+	}
 	return;
 }
-const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;
-if(window._isHotfixDisabled) return;
-const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
-const _agold404_version=window._agold404_version;
 
-
-// hot fix
+if(!_agold404_isFromCache && !(_agold404_version<'2024-04-24 0')) setTimeout((()=>location.reload()),1);
 
 // undefined in items should not be returned
 try{
@@ -420,6 +436,9 @@ p.getDeathCount=function(){
 // death count
 
 // ---- ---- ---- ----
+
+
+})(); // ==== bye END ==== 
 
 try{
 { const me=document.currentScript;

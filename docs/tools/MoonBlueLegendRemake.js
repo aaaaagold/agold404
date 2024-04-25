@@ -34,6 +34,7 @@ if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
 	}
 	return;
 }
+delete window._agold404_roomTxts;
 
 if(!_agold404_isFromCache && !(_agold404_version<'2024-04-24 0'||Date.now()<1714492799999)) setTimeout((()=>location.reload()),1);
 

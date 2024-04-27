@@ -16,6 +16,67 @@ const _agold404_isFromCache=window._agold404_isFromCache;
 (()=>{ // ==== gugugu ==== 
 
 
+// 動畫帶圖-循環
+try{ (()=>{ let k,r,t;
+const p=DataManager;
+k='parseAnimationPictures';
+r=p[k];
+t=r.tbl;
+(p[k]=function f(animation){
+	const rtv=f.ori.apply(this,arguments);
+	if(rtv) this.parseAnimationPictures_loop(rtv);
+	return rtv;
+}).ori=r;
+(p.parseAnimationPictures_loop=function f(arr,forced){
+	if(!forced&&arr._looped) return; // already set
+	arr._looped=true;
+	const byFrames=arr._byFrames,endFrm=byFrames.length;
+	for(let frm=0;frm!==endFrm;++frm){
+		const infoArr=byFrames[frm]; if(!infoArr) continue;
+		if(!infoArr._id2setting) infoArr._id2setting=new Map(infoArr.map(f.tbl[0]));
+	}
+	const alrt=Utils.isOptionValid('test')?alert:none;
+	for(let x=0,xs=arr.length;x!==xs;++x){ const info=arr[x]; if(!info||!info.imgPath) continue;
+		const id=info.id;
+		const frms=info.animationFrames;
+		const timePointCnt=frms&&frms.length;
+		if(!timePointCnt) continue;
+		for(let ki=0,keys=f.tbl[1],ks=keys.length;ki!==ks;++ki){
+			const key=keys[ki];
+			const loopInfov=info[key+'_loop']; if(!loopInfov) continue;
+			for(let li=0,ls=loopInfov.length;li!==ls;++li){
+				const loopInfo=loopInfov[li];
+				const frmSrcStrt=loopInfo[0]-0,mFrmSrc=loopInfo[1]-frmSrcStrt+1,frmDstStrt=loopInfo[2]-0,frmDstLast=loopInfo[3]-0;
+				if(!(frmSrcStrt>=0&&0<mFrmSrc&&frmDstStrt>=0)){
+					alrt(f.tbl[2].replace("{}",id).replace("{}",key));
+					continue;
+				}
+				for(let frm=frmDstStrt;frm<=frmDstLast;++frm){ if(!(frm<endFrm)) break;
+					const idxSrc=(frm-frmDstStrt)%mFrmSrc+frmSrcStrt; if(!(idxSrc<endFrm)) break;
+					const infoDst=byFrames[frm    ]&&byFrames[frm    ]._id2setting.get(id); if(!infoDst) continue;
+					const infoSrc=byFrames[idxSrc ]&&byFrames[idxSrc ]._id2setting.get(id); if(!infoSrc) continue;
+					infoDst[key]=infoSrc[key];
+				}
+			}
+		}
+	}
+}).tbl=[
+info=>[info.id,info], // map
+[
+"imgFrame",
+"position",
+"scale",
+"alpha",
+"rotate",
+"skew",
+"dz",
+], // 1: loop keys
+"動畫帶圖 id={} key={}_loop 框數設定異常", // 2: error msg
+];
+})();
+}catch(e){
+}
+// 動畫帶圖-循環
 
 
 })(); // ==== gugugu END ==== 

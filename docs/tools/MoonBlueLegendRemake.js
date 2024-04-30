@@ -337,6 +337,9 @@ if(_agold404_version<'2024-04-15 0') p.hotFix_maps.tbl[1].union_inplaceThis(new 
 182, // 貪吃蛇
 426, // 貪吃蛇
 ]));
+if(_agold404_version<'2024-04-25 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
+156, // 酒館惡搞
+]));
 (p.hotFix_others=function f(url){
 	if(!f.tbl[1].has(url)) return;
 	return f.tbl[2][0]+url;

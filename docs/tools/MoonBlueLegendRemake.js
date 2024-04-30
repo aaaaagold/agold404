@@ -566,6 +566,29 @@ p.getDeathCount=function(){
 }
 // death count
 
+// dynamicBattleback_change z
+try{
+(()=>{ let k,r,t;
+new cfc(Spriteset_Battle.prototype).add('dynamicBattleback_change',function f(id,changeFrame,final_alpha,path,loopH,loopV,speed_x,speed_y,final_sclx,final_scly,final_shx,final_shy,z){
+	const rtv=f.ori.apply(this,arguments);
+	if(rtv) rtv.z=z-0||0;
+	return rtv;
+}).add('update',function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.update_dynamicBattlebacks_sortChildren();
+	return rtv;
+}).add('update_dynamicBattlebacks_sortChildren',function f(){
+	const p=this._dynamicBattlebacks; if(!p) return;
+	p.children.sort(f.tbl[0]);
+	return p;
+},[
+(a,b)=>(a.z||0)-(b.z||0),
+]);
+})();
+}catch(e){
+}
+// dynamicBattleback_change z
+
 // ---- ---- ---- ----
 
 

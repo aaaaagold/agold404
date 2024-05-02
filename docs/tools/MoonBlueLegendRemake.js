@@ -427,6 +427,7 @@ r=p[k]; (p[k]=function f(){
 	const rtv=f.ori.apply(this,arguments);
 	this.tinyTitleOnlyMsg_allClear();
 	this.tinyTitleOnlyMsg_always();
+	this.tinyTitleOnlyMsg_murmur();
 	return rtv;
 }).ori=r;
 (p.tinyTitleOnlyMsg_always=function f(){
@@ -450,6 +451,20 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"LD",showFrame:4444}, "此遊戲並沒有將所有檔案打包成 1 個 exe ，\n因此玩家可以在遊戲的 www 資料夾用 python \n開一個簡易 http 伺服器，並用\\C[6]瀏覽器\\C[0]來玩。\n\npython2: python -m SimpleHTTPServer\npython3: python -m http.server" ],
 [ {loc:"LD",showFrame:7777}, "按下 \\C[6]F12\\C[0] 至 console 輸入以下，立即解鎖加速功能：\n\\C[6]ConfigManager.canFrameFastForward=true;\\C[0]" ],
 [ {loc:"LD",showFrame:4*4}, "有時\\C[6]黃金\\C[0]會做出新功能，\n然後就有新東西想做進來，\n結果就花更多時間了。" ],
+], // 1:
+];
+(p.tinyTitleOnlyMsg_murmur=function f(){
+	if(!(Math.random()*f.tbl[0]<1)) return;
+	const arr=f.tbl[1];
+	const info=arr.rnd1();
+	if(info) $gameTemp.popupMsg(info[1],info[0]);
+}).tbl=[
+4,
+[
+[ {loc:"RU",showFrame:444}, "黃金：「\n每天走在路上都會吸到二手菸，\n對於呼吸道脆弱的我來說，\n根本是每天\\C[6]被\\C[0]殺人未遂。\n」" ],
+[ {loc:"RU",showFrame:444}, "黃金：「\n應該要定義：\n讓他人吸二手菸者\\C[6]為\\C[0]殺人未遂。\n」" ],
+[ {loc:"RU",showFrame:444}, "黃金：「會讓他人吸到二手菸的菸品根本不該上市。」" ],
+[ {loc:"RU",showFrame:444}, "黃金：「我到現在還在咳，不想打 code ，都是二手菸害的！」" ],
 ], // 1:
 ];
 (p.tinyTitleOnlyMsg_allClear=function f(){

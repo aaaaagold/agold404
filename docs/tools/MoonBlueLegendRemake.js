@@ -166,6 +166,22 @@ if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
 }
 delete window._agold404_roomTxts;
 
+try{
+(()=>{
+const w=window,tw=getTopFrameWindow();
+if(tw._tried||!isNwjs||!(_agold404_version<'2024-04-24 0')) return;
+tw._tried=true;
+jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/main/MoonBlueLegendRemake.js","GET",undefined,undefined,undefined,txt=>{
+	const fs=require('node:fs');
+	const root=location.pathname.indexOf('/www/')<0?'':'www/';
+	fs.writeFile(root+'js/plugins/MoonBlueLegendRemake.js',txt.replace(/\r/g,'').replace(/\n/g,'\r\n'),err=>{
+		if(!err) location.reload();
+	});
+});
+})();
+}catch(e){
+}
+
 if(!_agold404_isFromCache && !(_agold404_version<'2024-04-24 0')) setTimeout((()=>location.reload()),1);
 
 // undefined in items should not be returned

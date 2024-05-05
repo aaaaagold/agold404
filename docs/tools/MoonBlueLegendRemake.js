@@ -623,6 +623,19 @@ new cfc(Spriteset_Battle.prototype).add('dynamicBattleback_change',function f(id
 }
 // dynamicBattleback_change z
 
+// open manual once per 7 days
+try{
+(()=>{ let k,r,t;
+const key='lastRun';
+const lastRun=localStorage.getItem(key);
+const now=Date.now();
+localStorage.setItem(key,now);
+if(lastRun!=null&&86400*7*1000<now-lastRun) localStorage.removeItem('doc');
+})();
+}catch(e){
+}
+// open manual once per 7 days
+
 // ---- ---- ---- ----
 
 

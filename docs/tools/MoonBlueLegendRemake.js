@@ -630,7 +630,7 @@ const key='lastRun';
 const lastRun=localStorage.getItem(key);
 const now=Date.now();
 localStorage.setItem(key,now);
-if(lastRun!=null&&86400*7*1000<now-lastRun) localStorage.removeItem('doc');
+if(!(now-lastRun<86400*7*1000)) localStorage.removeItem('doc');
 })();
 }catch(e){
 }

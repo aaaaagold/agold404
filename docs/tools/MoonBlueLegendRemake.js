@@ -267,9 +267,17 @@ delete window._agold404_roomTxts;
 try{
 (()=>{
 const w=window,tw=getTopFrameWindow();
-if(tw._tried||!isNwjs||!(_agold404_version<'2024-04-24 0')) return;
+if(tw._tried||!isNwjs) return;
 tw._tried=true;
 jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/main/MoonBlueLegendRemake.js","GET",undefined,undefined,undefined,txt=>{
+	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version='[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
+	if(!trgt) return; // unknown fail
+	{
+		const foo=new Function(trgt[0]+'\n return _agold404_version;');
+		let ver=_agold404_version;
+		try{ ver=foo(); }catch(e){}
+		if(!(_agold404_version<ver)) return;
+	}
 	const fs=require('node:fs');
 	const root=location.pathname.indexOf('/www/')<0?'':'www/';
 	fs.writeFile(root+'js/plugins/MoonBlueLegendRemake.js',txt.replace(/\r/g,'').replace(/\n/g,'\r\n'),err=>{
@@ -280,7 +288,7 @@ jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/ma
 }catch(e){
 }
 
-if(!_agold404_isFromCache && !(_agold404_version<'2024-04-24 0')) setTimeout((()=>location.reload()),1);
+if(!_agold404_isFromCache && !(_agold404_version<'2024-04-24 0')) setTimeout((()=>{try{console.clear();}catch(e){}location.reload();}),1);
 
 // undefined in items should not be returned
 try{

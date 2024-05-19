@@ -11,10 +11,108 @@ const _agold404_isFromCache=window._agold404_isFromCache;
 
 
 // hot fix
+const isYep=((typeof Yanfly)!=='undefined')&&('Param' in Yanfly);
+const yepParam=isYep&&Yanfly.Param;
 
 
 (()=>{ // ==== gugugu ==== 
 
+
+// buff max traits
+try{
+(()=>{ let k,r,t; const gbb=Game_BattlerBase;
+
+if(!gbb._enumMax) gbb._enumMax=404;
+if(!gbb.addEnum) gbb.addEnum=window.addEnum;
+
+const kw='增減buff上限層數';
+const kwt='TRAIT_'+kw;
+const kwget='get_'+kw;
+gbb.addEnum(kwt);
+
+t=[
+kwget,
+gbb[kwt],
+[
+function f(dataobj){ const meta=dataobj&&dataobj.meta; if(!meta) return;
+	let ts=dataobj.traits,c,t; if(!ts) ts=dataobj.traits=[];
+	const setting=meta[kw]; if(!setting) return;
+	const conf=JSON.parse(setting);
+	const tmp={};
+	for(let k in conf){
+		const val=conf[k]-0; if(!val) continue; // not changed
+		const key=f.tbl[k]-0; if(!(key>=0)) continue;
+		tmp[key]=val;
+	}
+	for(let key in tmp) ts.push({code:gbb[kwt],dataId:key-0,value:tmp[key],});
+}, // 2-0
+{
+0:0,
+1:1,
+2:2,
+3:3,
+4:4,
+5:5,
+6:6,
+7:7,
+"mhp":0,
+"mmp":1,
+"atk":2,
+"def":3,
+"mat":4,
+"mdf":5,
+"agi":6,
+"luk":7,
+"Mhp":0,
+"Mmp":1,
+"Atk":2,
+"Def":3,
+"Mat":4,
+"Mdf":5,
+"Agi":6,
+"Luk":7,
+"MHP":0,
+"MMP":1,
+"ATK":2,
+"DEF":3,
+"MAT":4,
+"MDF":5,
+"AGI":6,
+"LUK":7,
+}, // 2-1
+], // 2
+];
+t[2][0].tbl=t[2][1];
+
+new cfc(Scene_Boot.prototype).add('start',function f(){
+	$dataActors  .forEach(f.tbl[0]);
+	$dataClasses .forEach(f.tbl[0]);
+	$dataSkills  .forEach(f.tbl[0]);
+	$dataItems   .forEach(f.tbl[0]);
+	$dataWeapons .forEach(f.tbl[0]);
+	$dataArmors  .forEach(f.tbl[0]);
+	$dataEnemies .forEach(f.tbl[0]);
+	$dataTroops  .forEach(f.tbl[0]);
+	$dataStates  .forEach(f.tbl[0]);
+	return f.ori.apply(this,arguments);
+},t[2]);
+
+new cfc(Game_BattlerBase.prototype).add('isMaxBuffAffected',yepParam&&('BSCMaximumLimit' in yepParam)?(function f(paramId){
+	const limit = Math.max(1, this.maxBuffLimit(paramId));
+	const max = Yanfly.Param.BSCMaximumLimit;
+	return this._buffs[paramId] >= Math.min(limit, max) + this.isMaxBuffAffected_traitsDelta(paramId);
+}):(function f(paramId){
+	return this._buffs[paramId] >= 2 + this.isMaxBuffAffected_traitsDelta(paramId);
+}),undefined,true,true).add('isMaxBuffAffected_traitsDelta',function f(paramId){
+	return this[f.tbl[0]](paramId);
+},t,true,true).add(kwget,function f(paramId){
+	return this.traitsSum(f.tbl[1],paramId);
+},t,true,true);
+
+})();
+}catch(e){
+}
+// buff max traits
 
 // se echo api
 try{ (()=>{ let k,r,t;
@@ -353,7 +451,7 @@ if(_agold404_version<'2024-04-15 0') p.hotFix_maps.tbl[1].union_inplaceThis(new 
 182, // 貪吃蛇
 426, // 貪吃蛇
 ]));
-if(_agold404_version<'2024-04-25 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
+if(_agold404_version<'2024-05-20 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
 156, // 酒館惡搞
 ]));
 (p.hotFix_others=function f(url){
@@ -623,18 +721,27 @@ new cfc(Spriteset_Battle.prototype).add('dynamicBattleback_change',function f(id
 }
 // dynamicBattleback_change z
 
-// open manual once per 7 days
+// record lastRun
+try{
+localStorage.setItem('lastRun',Date.now());
+}catch(e){
+}
+// record lastRun
+
+// open manual once after 'lastManualOpened' is over 7 days ago
 try{
 (()=>{ let k,r,t;
-const key='lastRun';
-const lastRun=localStorage.getItem(key);
+const key='lastManualOpened';
+const lastOpened=localStorage.getItem(key)-0||0;
 const now=Date.now();
-localStorage.setItem(key,now);
-if(!(now-lastRun<86400*7*1000)) localStorage.removeItem('doc');
+if(!(now-lastOpened<1000*86400*7)){
+	localStorage.setItem(key,now);
+	localStorage.removeItem('doc');
+}
 })();
 }catch(e){
 }
-// open manual once per 7 days
+// open manual once after 'lastManualOpened' is over 7 days ago
 
 // ---- ---- ---- ----
 

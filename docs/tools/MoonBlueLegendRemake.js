@@ -267,17 +267,29 @@ delete window._agold404_roomTxts;
 try{
 (()=>{
 const w=window,tw=getTopFrameWindow();
-if(tw._tried||!isNwjs) return;
-tw._tried=true;
+if(tw._agold404_remoteTried) return;
+tw._agold404_remoteTried=true;
 jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/main/MoonBlueLegendRemake.js","GET",undefined,undefined,undefined,txt=>{
-	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version=(_agold404_version\|\|)?'[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
+	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version=((window\.)?_agold404_version\|\|)?'[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
 	if(!trgt) return; // unknown fail
+	
+	const key='-MBR-mainJs-body';
 	{
 		const foo=new Function(trgt[0]+'\n return _agold404_version;');
 		let ver=_agold404_version;
 		try{ ver=foo(); }catch(e){}
-		if(!(_agold404_version<ver)) return;
+		if(!(_agold404_version<ver)){
+			localStorage.removeItem(key);
+			return;
+		}
 	}
+	if(!isNwjs){
+		const val=LZString.compressToBase64(txt);
+		localStorage.setItem(key,val);
+		if(val===localStorage.getItem(key,val)) location.reload();
+		return;
+	}
+	
 	const fs=require('node:fs');
 	const root=location.pathname.indexOf('/www/')<0?'':'www/';
 	fs.writeFile(root+'js/plugins/MoonBlueLegendRemake.js',txt.replace(/\r/g,'').replace(/\n/g,'\r\n'),err=>{

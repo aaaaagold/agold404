@@ -270,7 +270,7 @@ const w=window,tw=getTopFrameWindow();
 if(tw._agold404_remoteTried) return;
 tw._agold404_remoteTried=true;
 jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/main/MoonBlueLegendRemake.js","GET",undefined,undefined,undefined,txt=>{
-	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version=((window\.)?_agold404_version\|\|)?'[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
+	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version(_)?=((window\.)?_agold404_version\|\|)?'[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
 	if(!trgt) return; // unknown fail
 	
 	const key='-MBR-mainJs-body';

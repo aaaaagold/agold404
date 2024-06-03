@@ -253,7 +253,7 @@ info=>[info.id,info], // map
 
 
 if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
-	if(!(Date.now()<1744744744744)){
+	if(0&&!(Date.now()<1744744744744)){
 		const r=SceneManager.goto;
 		(SceneManager.goto=function f(scctor){
 			if(scctor) return f.ori.call(this,Scene_Options);
@@ -270,7 +270,7 @@ const w=window,tw=getTopFrameWindow();
 if(tw._tried||!isNwjs) return;
 tw._tried=true;
 jurl("https://raw.githubusercontent.com/aaaaagold/MoonBlueRemake_mainJsPlugin/main/MoonBlueLegendRemake.js","GET",undefined,undefined,undefined,txt=>{
-	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version='[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
+	const trgt=txt.match(/(?<=(^|\n)[ \t\r]*)var _agold404_version=(_agold404_version\|\|)?'[0-9]{4,}-[0-9]{2}-[0-9]{2} [0-9]+';(?=[ \t\r]*($|\n))/);
 	if(!trgt) return; // unknown fail
 	{
 		const foo=new Function(trgt[0]+'\n return _agold404_version;');
@@ -459,7 +459,7 @@ if(_agold404_version<'2024-04-15 0') p.hotFix_maps.tbl[1].union_inplaceThis(new 
 182, // 貪吃蛇
 426, // 貪吃蛇
 ]));
-if(_agold404_version<'2024-05-20 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
+if(_agold404_version<'2024-06-04 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
 156, // 酒館惡搞
 ]));
 (p.hotFix_others=function f(url){

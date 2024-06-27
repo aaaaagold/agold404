@@ -763,6 +763,23 @@ if(!(now-lastOpened<1000*86400*7)){
 }
 // open manual once after 'lastManualOpened' is over 7 days ago
 
+// using canvas mode if not enough freemem
+try{
+(()=>{ let k,r,t;
+if(isTest||!isNwjs) return;
+const th=1024*1024*1024*2;
+if(require('os').freemem()<th){
+	let newHref=location.pathname;
+	newHref+="?"; if(location.search) newHref+=location.search;
+	newHref+=(location.search&&newHref.slice(-1)!=="&"?"&":"")+'canvas';
+	newHref+="#"; if(location.hash) newHref+=location.hash;
+	location.href=newHref;
+}
+})();
+}catch(e){
+}
+// using canvas mode if not enough freemem
+
 // ---- ---- ---- ----
 
 

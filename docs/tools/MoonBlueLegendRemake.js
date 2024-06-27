@@ -768,7 +768,7 @@ try{
 (()=>{ let k,r,t;
 if(isTest||!isNwjs) return;
 const th=1024*1024*1024*2;
-if(require('os').freemem()<th){
+if(location.search.indexOf('canvas')<0&&require('os').freemem()<th){
 	let newHref=location.pathname;
 	newHref+="?"; if(location.search) newHref+=location.search;
 	newHref+=(location.search&&newHref.slice(-1)!=="&"?"&":"")+'canvas';

@@ -18,6 +18,14 @@ const yepParam=isYep&&Yanfly.Param;
 (()=>{ // ==== gugugu ==== 
 
 
+if(!window.addEnum) window.addEnum=function(key){
+	if(this[key]) return;
+	this._enumMax|=0;
+	this[key]=++this._enumMax;
+	return this;
+};
+
+
 // buff max traits
 try{
 (()=>{ let k,r,t; const gbb=Game_BattlerBase;
@@ -784,6 +792,16 @@ if(location.search.indexOf('canvas')<0&&require('os').freemem()<th){
 }catch(e){
 }
 // using canvas mode if not enough freemem
+
+// no audio fastforward
+try{
+(()=>{ let k,r,t;
+return; // 參數黏在一起ㄌ ( AudioManager._globalPitch )
+[5,6,8,].forEach(i=>Input.frameFastForward_end.tbl[i]=none);
+})();
+}catch(e){
+}
+// no audio fastforward
 
 // ---- ---- ---- ----
 

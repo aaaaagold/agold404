@@ -803,6 +803,26 @@ return; // 參數黏在一起ㄌ ( AudioManager._globalPitch )
 }
 // no audio fastforward
 
+// log map when one of certain switches is changed
+try{
+(()=>{ let k,r,t;
+new cfc(Game_System.prototype).add('logSwitches',function f(id,val){
+	let cont=this._logSwitches; if(!cont) cont=this._logSwitches=[];
+	cont.push([id,val,$gameMap&&$gameMap.mapId()]);
+},undefined,true,true);
+new cfc(Game_Switches.prototype).add('setValue',function f(id,val){
+	if($gameSystem&&f.tbl[0].has(id-0)) $gameSystem.logSwitches(id,val);
+	return f.ori.apply(this,arguments);
+},[
+new Set([
+323, // mob stop
+]),
+]);
+})();
+}catch(e){
+}
+// log map when one of certain switches is changed
+
 // ---- ---- ---- ----
 
 

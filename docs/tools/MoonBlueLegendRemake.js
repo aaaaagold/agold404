@@ -516,6 +516,7 @@ const addTbl=(f,tbl)=>{
 t,
 [
 ["CommonEvents.json",addTbl(function f(arr){
+	return; // temp disabled
 	if(!$dataCommonEvents) return;
 	const xs=arr&&arr.length; if(0<xs){ for(let x=0;x!==xs;++x){ if(arr[x] && $dataCommonEvents[x] && !f.tbl[0].has(x)) $dataCommonEvents[x].list=arr[x].list; } }
 },[

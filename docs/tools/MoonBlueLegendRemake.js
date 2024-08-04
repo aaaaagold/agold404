@@ -503,6 +503,10 @@ r=p[k]; (p[k]=function f(){
 	this.tuneDatabase();
 	return rtv;
 }).ori=r;
+const addTbl=(f,tbl)=>{
+	f.tbl=tbl;
+	return f;
+};
 (p.tuneDatabase=function f(){
 	try{
 		f.tbl[1].slice().forEach(f.tbl[2].bind(f.tbl));
@@ -511,10 +515,14 @@ r=p[k]; (p[k]=function f(){
 }).tbl=[
 t,
 [
-["CommonEvents.json",arr=>{
+["CommonEvents.json",addTbl(function f(arr){
 	if(!$dataCommonEvents) return;
-	const xs=arr&&arr.length; if(0<xs){ for(let x=0;x!==xs;++x){ if(arr[x] && $dataCommonEvents[x]) $dataCommonEvents[x].list=arr[x].list; } }
-}],
+	const xs=arr&&arr.length; if(0<xs){ for(let x=0;x!==xs;++x){ if(arr[x] && $dataCommonEvents[x] && !f.tbl[0].has(x)) $dataCommonEvents[x].list=arr[x].list; } }
+},[
+new Set([
+256, // 攸特線旅館
+]), // ommited id
+])],
 ],
 function(info){
 	jurl(this[0][0]+"data/"+info[0],"GET",undefined,undefined,undefined,txt=>{

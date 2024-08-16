@@ -618,7 +618,7 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"RU",showFrame:444}, "黃金：「我到現在還在咳，不想打 code ，都是二手菸害的！」" ],
 ], // 1:
 ];
-if(!(Date.now()<1723896000000)){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
+if(!(Date.now()<1723870707070)){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
 [ {loc:"RU",showFrame:444}, "徵程式。嚴禁台清交者來自虐。\n不含交接，請自行上手。" ],
 ]; }
 (p.tinyTitleOnlyMsg_allClear=function f(){

@@ -253,6 +253,22 @@ info=>[info.id,info], // map
 }
 // 動畫帶圖-循環
 
+// alert on using empty animation
+try{
+(()=>{ let k,r,t;
+new cfc(Sprite_Animation.prototype).add('setup',function f(target, anid, mirror, delay, rate){
+	if(!this.isValidAnimation(anid)) alert(f.tbl[0]+(anid&&anid.id));
+	return f.ori.apply(this,arguments);
+},[
+"using invalid animation id = ", // 0: msg
+]).add('isValidAnimation',function f(ani){
+	return ani && ani.name;
+},0,1,1);
+})();
+}catch(e){
+}
+// alert on using empty animation
+
 
 })(); // ==== gugugu END ==== 
 

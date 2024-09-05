@@ -635,7 +635,7 @@ r=p[k]; (p[k]=function f(){
 ], // 1:
 ];
 if(!(Date.now()<1723870707070)){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
-[ {loc:"RU",showFrame:444}, "徵程式。嚴禁台清交者來自虐。\n不含交接，請自行上手。" ],
+[ {loc:"RU",showFrame:444}, "黃金：「徵程式。嚴禁台清交者來自虐。\n不含交接，請自行上手。」" ],
 ]; }
 (p.tinyTitleOnlyMsg_allClear=function f(){
 	if(!ConfigManager.allClear||!(Math.random()*f.tbl[0]<1)) return;

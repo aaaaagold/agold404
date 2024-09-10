@@ -276,8 +276,8 @@ new cfc(Sprite_Animation.prototype).add('setup',function f(target, anid, mirror,
 (()=>{ // ==== bye ==== 
 
 
-if(!window._agold404_keepGoing&&!(Date.now()<1743734744444)){
-	if(0&&!(Date.now()<1744744744744)){
+if(!window._agold404_keepGoing&&!(Date.now()<1744444444444)){
+	if(!(Date.now()<1747474747474)){
 		const r=SceneManager.goto;
 		(SceneManager.goto=function f(scctor){
 			if(scctor) return f.ori.call(this,Scene_Options);

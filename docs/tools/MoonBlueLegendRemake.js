@@ -483,6 +483,7 @@ r=p[k]; (p[k]=function f(method, url, async, user, password){
 /^data\/Map([0-9]+)\.json$/,
 new Set([
 1, // test
+156, // 酒館惡搞
 398, // 房
 ]),
 t,
@@ -494,9 +495,6 @@ if(_agold404_version<'2024-04-06 1') p.hotFix_maps.tbl[1].union_inplaceThis(new 
 if(_agold404_version<'2024-04-15 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
 182, // 貪吃蛇
 426, // 貪吃蛇
-]));
-if(_agold404_version<'2024-06-04 0') p.hotFix_maps.tbl[1].union_inplaceThis(new Set([
-156, // 酒館惡搞
 ]));
 (p.hotFix_others=function f(url){
 	if(!f.tbl[1].has(url)) return;

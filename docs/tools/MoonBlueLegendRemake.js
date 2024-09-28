@@ -9,6 +9,47 @@ const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
 const _agold404_version=window._agold404_version;
 const _agold404_isFromCache=window._agold404_isFromCache;
 
+const cfc=(()=>{
+const cf=(p,k,f,tbl,is_putDeepest,is_notUsingOri,moduleName)=>{
+	const pre=p.__proto__&&p.__proto__.constructor.prototype;
+	if(is_putDeepest && p[k] && p[k].ori && !(pre&&pre[k]===p[k])){
+		let fp=p[k],fc=p[k].ori,fs=new Set();
+		do{
+			if(fs.has(fc)) throw new Error('f.ori repeated');
+			fs.add(fc);
+			if(fc.ori && !(pre&&pre[k]===fc)){
+				fp=fc;
+				fc=fc.ori;
+			}else break;
+		}while(fc);
+		f._dbg=fc;
+		(fp.ori=f).ori=fc;
+	}else{
+		const r=p[k];
+		p[k]=f;
+		f._dbg=r;
+		f.ori=r;
+	}
+	if(is_notUsingOri) f.ori=undefined;
+	f.tbl=tbl;
+	f._funcName=k;
+	f._moduleName=moduleName;
+	return p;
+};
+const a=function cfc(p){
+	if(this===window || (typeof globalThis!=='undefined'&&this===globalThis)) throw new Error('call a constructor without new');
+	this._p=p;
+}
+const p=a.prototype;
+p.constructor=a;
+p.add=function(key,f,t,d,u,m){
+	cf(this._p,key,f,t,d,u,m);
+	return this;
+};
+p.getP=function(){ return this._p; };
+return a;
+})();
+
 
 // hot fix
 const isYep=((typeof Yanfly)!=='undefined')&&('Param' in Yanfly);
@@ -828,6 +869,26 @@ return; // 參數黏在一起ㄌ ( AudioManager._globalPitch )
 }catch(e){
 }
 // no audio fastforward
+
+// 倉庫
+try{
+(()=>{ let k,r,t;
+const eeee=s=>eval(s);
+{
+const w=window,tw=getTopFrameWindow();
+jurl("https://raw.githubusercontent.com/aaaaagold/RMMV_plugins_agold404/refs/heads/main/plugins/agold404_Depository.js","GET",undefined,undefined,undefined,txt=>{
+	if(tw._agold404_depository) return setTimeout(()=>{eeee(tw._agold404_depository.txt);},0);
+	tw._agold404_depository={
+		txt:txt,
+		timestamp:Date.now(),
+	};
+	eeee(txt);
+});
+}
+})();
+}catch(e){
+}
+// 倉庫
 
 // log map when one of certain switches is changed
 try{

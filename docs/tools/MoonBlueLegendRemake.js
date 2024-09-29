@@ -873,6 +873,38 @@ return; // 參數黏在一起ㄌ ( AudioManager._globalPitch )
 // 倉庫
 try{
 (()=>{ let k,r,t;
+new cfc(Window_ItemList.prototype).add('drawItemNumber',function f(item, x, y, width){
+	if(this.needsNumber()) this.drawItemNumber_num(item,x,y,width,Yanfly.Util.toGroup($gameParty.numItems(item)));
+},undefined,true,true).add('drawItemNumber_num',function f(item,x,y,width,num){
+	this.contents.fontSize = Yanfly.Param.ItemQuantitySize;
+	this.drawText('\u00d7' + num, x, y, width, 'right');
+	this.resetFontSettings();
+},undefined,true,true).add('drawItemNumber_getReservedDigitsCnt',function f(){
+	return f.tbl[0];
+},[
+4,
+],true,true);
+new cfc(Game_Item.prototype).add('getItemKeyInfo',function f(){
+	return [(this._dataClass?this._dataClass[0]:"_"),this._itemId];
+},undefined,true,true).add('getItemKey',function f(){
+	return this.getItemKeyInfo().join(f.tbl[0]);
+},t=[
+":",
+],true,true);
+new cfc(Game_Item).add('itemKeyInfoToDataobj',function f(itemKeyInfo){
+	if(!itemKeyInfo) return false;
+	if(!f.tbl[0]){ f.tbl[0]={
+		i:$dataItems,
+		w:$dataWeapons,
+		a:$dataArmors,
+	}; }
+	const cont=f.tbl[0][itemKeyInfo[0]];
+	return cont&&cont[itemKeyInfo[1]];
+},[
+undefined,
+],true,true).add('itemKeyToDataobj',function f(itemKey){
+	return this.itemKeyInfoToDataobj(itemKey&&itemKey.split(f.tbl[0]));
+},t,true,true);
 const eeee=s=>eval(s);
 {
 const w=window,tw=getTopFrameWindow();
@@ -893,6 +925,7 @@ jurl("https://raw.githubusercontent.com/aaaaagold/RMMV_plugins_agold404/refs/hea
 // log map when one of certain switches is changed
 try{
 (()=>{ let k,r,t;
+
 new cfc(Game_System.prototype).add('logSwitches',function f(id,val){
 	let cont=this._logSwitches; if(!cont) cont=this._logSwitches=[];
 	cont.push([id,val,$gameMap&&$gameMap.mapId()]);

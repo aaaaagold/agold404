@@ -413,6 +413,40 @@ p.clearAprilFools=()=>{ const dataobj=$dataStates[1];
 }
 // clear april fools
 
+// shorthand
+try{
+(()=>{ let k,r,t;
+
+// // gameObj2sprite
+new cfc(Game_Character.prototype).add('getSprite',function f(){
+	const sc=SceneManager._scene;
+	const m=sc&&sc._chr2sp;
+	return m&&m.get(this);
+},undefined,false,true);
+new cfc(Game_Battler.prototype).add('getSprite',function f(){
+	const sc=SceneManager._scene;
+	const m=sc&&sc._btlr2sp;
+	return m&&m.get(this);
+},undefined,false,true);
+new cfc(SceneManager).add('getSprite',function f(obj){
+	const sc=this._scene;
+	const func=f.tbl[0].get(sc&&sc.constructor);
+	const m=func&&func(sc);
+	return m&&m.get(obj);
+},[
+new Map([
+[Scene_Map,sc=>sc._chr2sp],
+[Scene_Battle,sc=>sc._btlr2sp],
+]), // 0: constructor -> spritesMap
+]);
+})();
+// // gameObj2sprite
+
+})();
+}catch(e){
+}
+// shorthand
+
 // update popupMsg
 try{
 if(_agold404_version<'2024-03-29 1')(()=>{ let k,r,t;

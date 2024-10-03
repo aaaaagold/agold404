@@ -417,6 +417,8 @@ p.clearAprilFools=()=>{ const dataobj=$dataStates[1];
 try{
 (()=>{ let k,r,t;
 
+for(let x=96;x<=105;++x) Input.keyMapper[x]="numPad-"+(x-96); // num pad when num lock on
+
 // // gameObj2sprite
 new cfc(Game_Character.prototype).add('getSprite',function f(){
 	const sc=SceneManager._scene;

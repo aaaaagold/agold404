@@ -321,7 +321,7 @@ if(!window._agold404_keepGoing&&!(Date.now()<1744444444444)){
 	if(!(Date.now()<1747474747474)){
 		const r=SceneManager.goto;
 		(SceneManager.goto=function f(scctor){
-			if(scctor) return f.ori.call(this,Scene_Options);
+			if(scctor===Scene_Map) return f.ori.call(this,Scene_Options);
 			else return f.ori.apply(this,arguments);
 		}).ori=r;
 	}
@@ -472,7 +472,7 @@ t=p[k].tbl;
 
 // YEP卡條
 try{
-if(_agold404_version<'2024-03-10 0')(()=>{ let k,r,t;
+(()=>{ let k,r,t;
 const p=Game_Battler.prototype;
 k='onAllActionsEnd';
 r=p[k]; (p[k]=function f(){

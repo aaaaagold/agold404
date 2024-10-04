@@ -441,7 +441,6 @@ new Map([
 [Scene_Battle,sc=>sc._btlr2sp],
 ]), // 0: constructor -> spritesMap
 ]);
-})();
 // // gameObj2sprite
 
 })();

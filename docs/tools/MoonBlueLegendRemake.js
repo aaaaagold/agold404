@@ -700,7 +700,7 @@ r=p[k]; (p[k]=function f(){
 	const info=arr.rnd1();
 	if(info) $gameTemp.popupMsg(info[1],info[0]);
 }).tbl=[
-4,
+2,
 [
 [ {loc:"RU",showFrame:444}, "黃金：「\n每天走在路上都會吸到二手菸，\n對於呼吸道脆弱的我來說，\n根本是每天\\C[6]被\\C[0]殺人未遂。\n」" ],
 [ {loc:"RU",showFrame:444}, "黃金：「\n應該要定義：\n讓他人吸二手菸者\\C[6]為\\C[0]殺人未遂。\n」" ],
@@ -708,7 +708,7 @@ r=p[k]; (p[k]=function f(){
 [ {loc:"RU",showFrame:444}, "黃金：「我到現在還在咳，不想打 code ，都是二手菸害的！」" ],
 ], // 1:
 ];
-if(Math.random()<0.5){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
+if(Math.random()<0.875){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
 [ {loc:"RU",showFrame:444}, "黃金：「徵程式。嚴禁台清交者來自虐。\n不含交接，請自行上手。」" ],
 ]; }
 (p.tinyTitleOnlyMsg_allClear=function f(){

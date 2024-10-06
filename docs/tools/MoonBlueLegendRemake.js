@@ -756,6 +756,29 @@ r=p[k];
 }
 // fix YEP's awful UX
 
+// fix YEP's awful UX - select enemy, mouse and keyboard
+try{
+(()=>{ let k,r,t;
+
+{ const p=Window_BattleEnemy.prototype;
+k='getMouseOverEnemy';
+r=p[k]; (p[k]=function f(){
+	const T=TouchInput;
+	const x=T._mouseOverX,y=T._mouseOverY;
+	if(this._getMouseOverEnemy===undefined || this._lstPtrX!==x || this._lstPtrY!==y){
+		this._lstPtrX=x;
+		this._lstPtrY=y;
+		this._getMouseOverEnemy=f.ori.apply(this,arguments);
+	}else this._getMouseOverEnemy=this.index();
+	return this._getMouseOverEnemy;
+}).ori=r;
+}
+
+})();
+}catch(e){
+}
+// fix YEP's awful UX - select enemy, mouse and keyboard
+
 // 拿道具+++
 try{
 if(!isTest) window._agold404_cheatFilter=dataobj=>{

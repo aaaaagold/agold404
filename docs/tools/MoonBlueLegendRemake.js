@@ -961,6 +961,63 @@ jurl("https://raw.githubusercontent.com/aaaaagold/RMMV_plugins_agold404/refs/hea
 }
 // 倉庫
 
+// bareHandsWeapons
+try{
+(()=>{ let k,r,t;
+
+t=[
+"BLR_custom/default-actorBareHandsAttack.txt",
+undefined, // parsed data
+"空手技能id",
+"空手武器id",
+[],
+];
+
+new cfc(Scene_Boot.prototype).add('initialize',function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.addLoadDefaultActorBareHandsSkill();
+	return rtv;
+}).add('addLoadDefaultActorBareHandsSkill',function f(){
+	ImageManager.otherFiles_addLoad(f.tbl[0]);
+},t);
+
+new cfc(Game_BattlerBase.prototype).add('getData',function f(){
+	return f.ori&&f.ori.apply(this,arguments);
+}).add('_defaultActorBareHandsSkill_getParsed',function f(forced){
+	if(!forced&&f.tbl[1]) return f.tbl[1];
+	const rtv={},raw=ImageManager.otherFiles_getData(f.tbl[0]); if(!raw) return rtv;
+	const arr=raw.replace(/\r/g,'').split('\n');
+	const re_spaces_endpoints=/^[ \t]+|[ \t]+$/g;
+	for(let x=0,xs=arr.length;x!==xs;++x){
+		const idx=arr[x].indexOf('='); if(!(idx>=0)) continue;
+		rtv[arr[x].slice(0,idx).replace(re_spaces_endpoints,'')]=arr[x].slice(idx+1)-0;
+	}
+	return f.tbl[1]=rtv;
+},t).add('attackSkillId',function f(){
+	const rtv=f.ori.apply(this,arguments);
+	if(this.constructor===Game_Actor) return this._attackSkillId_defaultActorBareHandsSkill(rtv);
+	return rtv;
+}).add('_attackSkillId_defaultActorBareHandsSkill',function f(oriVal){
+	if(this.constructor===Game_Actor){
+		const skillId=this.getData().meta[f.tbl[2]]-0;
+		if(skillId) return skillId;
+		return this._defaultActorBareHandsSkill_getParsed()[f.tbl[2]]||oriVal;
+	}
+	return oriVal;
+},t).add('bareHandsWeapons',function f(){
+	if(this.constructor===Game_Actor){
+		let weapon=$dataWeapons[this.getData().meta[f.tbl[3]]-0];
+		if(!weapon) weapon=$dataWeapons[this._defaultActorBareHandsSkill_getParsed()[f.tbl[3]]];
+		if(weapon) return [weapon,];
+	}
+	return f.tbl[4];
+},t);
+
+})();
+}catch(e){
+}
+// bareHandsWeapons
+
 // log map when one of certain switches is changed
 try{
 (()=>{ let k,r,t;

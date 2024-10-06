@@ -46,6 +46,10 @@ p.add=function(key,f,t,d,u,m){
 	cf(this._p,key,f,t,d,u,m);
 	return this;
 };
+p.addBase=function(key,f,t){
+	cf(this._p,key,f,t,true,true);
+	return this;
+};
 p.getP=function(){ return this._p; };
 return a;
 })();

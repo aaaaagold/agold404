@@ -321,16 +321,35 @@ new cfc(Sprite_Animation.prototype).add('setup',function f(target, anid, mirror,
 (()=>{ // ==== bye ==== 
 
 
-if(!window._agold404_keepGoing&&!(Date.now()<1744444444444)){
-	if(!(Date.now()<1747474747474)){
+if(!window._agold404_keepGoing&&!(Date.now()<1744444444444)){ try{
+	{
 		const r=SceneManager.goto;
 		(SceneManager.goto=function f(scctor){
-			if(scctor===Scene_Map) return f.ori.call(this,Scene_Options);
-			else return f.ori.apply(this,arguments);
+			ConfigManager.canFrameFastForward=true;
+			return f.ori.apply(this,arguments);
 		}).ori=r;
 	}
-	return;
-}
+	{
+		const p=Game_Party.prototype;
+		const r=p.initialize; (p.initialize=function f(){
+			const rtv=f.ori.apply(this,arguments);
+			this._gold=1e11;
+			{
+				const idx=$dataItems.findLastIndex(x=>x&&x.name==="奇蹟之靈");
+				if(idx>=0) this._items[idx]=$dataItems[idx].maxItem=1e4;
+			}
+			{
+				const idx=$dataItems.filter(x=>x&&x.name==="能力果實寶盒");
+				if(idx>=0) this._items[idx]=$dataItems[idx].maxItem=1e4;
+			}
+			return rtv;
+		}).ori=r;
+	}
+	if(!(Date.now()<1747474747474)){
+		return;
+	}
+}catch(e){
+} }
 delete window._agold404_roomTxts;
 
 try{
@@ -713,7 +732,7 @@ r=p[k]; (p[k]=function f(){
 ], // 1:
 ];
 if(Math.random()<0.875){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
-[ {loc:"RU",showFrame:444}, "黃金：「徵程式。嚴禁台清交者來自虐。\n不含交接，請自行上手。」" ],
+[ {loc:"RU",showFrame:444}, "黃金：「徵程式接手。嚴禁台清交者來自虐。\n不含交接，請自行上手。」" ],
 ]; }
 (p.tinyTitleOnlyMsg_allClear=function f(){
 	if(!ConfigManager.allClear||!(Math.random()*f.tbl[0]<1)) return;
@@ -1040,6 +1059,104 @@ new cfc(Game_BattlerBase.prototype).add('getData',function f(){
 }catch(e){
 }
 // bareHandsWeapons
+
+// command 111
+try{
+(()=>{ let k,r,t;
+
+cf(Game_Interpreter.prototype,'command111',function f(){
+	// interpreter branch
+	if(this._params[0]===12){
+		let res;
+		try{
+			res=!!eval(this._params[1]);
+		}catch(e){
+			if(this && this._params){
+				console.warn(this._params);
+				e.message+='\n\nScript:\n'+this._params[1];
+				e.message+=getStr_英文不好齁()+f.tbl[1][1];
+			}
+			e.name+=' in Game_Interpreter.prototype.command111';
+			e._msgOri=e.message;
+			throw e;
+		}
+		this._branch[this._indent]=res;
+		if(!this._branch[this._indent]) this.skipBranch();
+		return true;
+	}else return f.ori.apply(this,arguments);
+},[
+0,
+[
+'',
+'條件分歧ㄉ條件打錯ㄌ',
+],
+]);
+
+})();
+}catch(e){
+}
+// command 111
+
+// command 355
+try{
+(()=>{ let k,r,t;
+
+new cfc(Game_Interpreter.prototype).add('command355',function f(){
+	let script=this.currentCommand().parameters[0];
+	while(f.tbl[0].has(this.nextEventCode())){
+		this._index++;
+		script+='\n';
+		script+=this.currentCommand().parameters[0];
+	}
+	try{
+		eval(script);
+	}catch(e){
+		console.warn(f.tbl[1][0],'\n',script);
+		if(script){
+			e.message+='\n\nScript:\n'+script;
+			e.message+=getStr_英文不好齁()+f.tbl[1][1];
+		}
+		e.name+=' in ';
+		e.name+=f.tbl[0];
+		e._msgOri=e.message;
+		throw e;
+	}
+	return true;
+},[
+new Set([355,655,]),
+[
+'Game_Interpreter.prototype.command355',
+' JavaScript 打錯ㄌ',
+],
+]);
+
+})();
+}catch(e){
+}
+// command 355
+
+// font face
+try{
+(()=>{ let k,r,t;
+
+{ const d=document;
+(d.head||d.body).ac(d.ce('style').atxt("@font-face {\n\tfont-family: MBR刪節號;\n\tsrc: local('標楷體');\t\nunicode-range: U+2026;\n}"));
+}
+
+const a=Bitmap;
+{ const p=a.prototype;
+k='_makeFontNameText';
+r=p[k]; (p[k]=function f(){
+	this.fontFace=f.tbl;
+	return f.ori.apply(this,arguments);
+}).ori=r;
+p[k].tbl="MBR刪節號,Consolas,'Courier New',Courier,GameFont,微軟正黑體,標楷體,monospace";
+}
+
+})();
+}catch(e){
+}
+// font face
 
 // log map when one of certain switches is changed
 try{

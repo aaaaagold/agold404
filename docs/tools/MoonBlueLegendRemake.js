@@ -345,6 +345,13 @@ if(!window._agold404_keepGoing&&!(Date.now()<1744444444444)){ try{
 			return rtv;
 		}).ori=r;
 	}
+	if(!(_agold404_version>='2024-07-04 0')){
+		const r=SceneManager.goto;
+		(SceneManager.goto=function f(scctor){
+			if(scctor===Scene_Map) arguments[0]=Scene_Options;
+			return f.ori.apply(this,arguments);
+		}).ori=r;
+	}
 	if(!(Date.now()<1747474747474)){
 		return;
 	}

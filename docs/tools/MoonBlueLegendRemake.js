@@ -834,6 +834,32 @@ p[k].tbl=[t,];
 }
 // reduce refresh
 
+// fix wheel error msg
+try{
+(()=>{ let k,r,t;
+
+{ const p=TouchInput;
+k='_setupEventHandlers';
+r=p[k]; (p[k]=function(){
+	const isSupportPassive = Utils.isSupportPassiveEvent();
+	const opt=isSupportPassive ? {passive: false} : false;
+	document.addEventListener('mousedown', this._onMouseDown.bind(this));
+	document.addEventListener('mousemove', this._onMouseMove.bind(this));
+	document.addEventListener('mouseup', this._onMouseUp.bind(this));
+	document.addEventListener('wheel', this._onWheel.bind(this), opt );
+	document.addEventListener('touchstart', this._onTouchStart.bind(this), opt );
+	document.addEventListener('touchmove', this._onTouchMove.bind(this), opt );
+	document.addEventListener('touchend', this._onTouchEnd.bind(this));
+	document.addEventListener('touchcancel', this._onTouchCancel.bind(this));
+	document.addEventListener('pointerdown', this._onPointerDown.bind(this));
+}).ori=r;
+}
+
+})();
+}catch(e){
+}
+// fix wheel error msg
+
 // fix YEP's awful UX
 try{
 (()=>{ let k,r,t;

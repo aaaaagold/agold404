@@ -449,6 +449,18 @@ try{
 
 for(let x=96;x<=105;++x) Input.keyMapper[x]=""+x; // num pad when num lock on
 
+// detect if a point is in DisplayObject
+new cfc(PIXI.DisplayObject.prototype).addBase('getRect_local',function f(){
+	const a=this.anchor;
+	const w=this.width,h=this.height;
+	return new Rectangle(-a.x*w,-a.y*h,w,h);
+}).addBase('containsPoint_local',function f(xy){
+	return this.getRect_local().contains(xy.x,xy.y);
+}).addBase('containsPoint_global',function f(xy){
+	return this.containsPoint_local(this.toLocal(xy));
+});
+// detect if a point is in DisplayObject
+
 // // gameObj2sprite
 new cfc(Game_Character.prototype).add('getSprite',function f(){
 	const sc=SceneManager._scene;

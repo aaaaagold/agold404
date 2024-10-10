@@ -773,6 +773,67 @@ if(Math.random()<0.875){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
 }
 // 小訊息
 
+// reduce refresh
+try{
+(()=>{ let k,r,t;
+
+{ const p=Scene_Battle.prototype;
+k='updateStatusWindowRequests';
+r=p[k]; (p[k]=function f(){
+	const sw=this._statusWindow;
+	if( !(sw && sw.visible && sw.alpha && !sw.isClosed()) ) return;
+	return f.ori.apply(this,arguments);
+}).ori=r;
+}
+
+{ const p=Sprite.prototype;
+p.refresh_do=p.refresh_do||p._refresh;
+p._refresh=function f(){
+	SceneManager.addRefresh(this);
+};
+}
+
+{ const p=Window_BattleStatus.prototype;
+k='getPendedRedrawFunc';
+//Window_BattleActor.prototype[k]=p[k]; // bypass this structure
+r=p[k]; (p[k]=function(){
+	let rtv=this._pendedRedrawFunc; if(!rtv) rtv=this._pendedRedrawFunc=new Set();
+	return rtv;
+}).ori=r;
+k='addPendedRedrawFunc';
+r=p[k]; (p[k]=function(f){
+	this.getPendedRedrawFunc().add(f);
+}).ori=r;
+k='refresh';
+r=p[k];
+(p[t=k+'_do']=function f(){
+	if(!this.visible||!this.alpha) return SceneManager.NOT_REFRESHED;
+	if(this._pendedRedrawFunc && this._pendedRedrawFunc.size){
+		const s=this.getPendedRedrawFunc();
+		s.forEach(f=>f.call(this));
+		s.clear();
+	}
+	return f.ori.apply(this,arguments);
+}).ori=r;
+(p[k]=function f(){
+	SceneManager.addRefresh(this);
+}).ori=r;
+p[k].tbl=[t,];
+k='redrawATB';
+r=p[k];
+(p[t=k+'_do']=function(){ return f.ori.apply(this,arguments); }).ori=r;
+(p[k]=function f(){
+	if(this.isATBGaugeStyle(0)) return;
+	this.addPendedRedrawFunc(this[f.tbl[0]]);
+}).ori=r;
+p[k].tbl=[t,];
+}
+
+})();
+}catch(e){
+}
+// reduce refresh
+
 // fix YEP's awful UX
 try{
 (()=>{ let k,r,t;
@@ -816,6 +877,20 @@ r=p[k]; (p[k]=function f(){
 }catch(e){
 }
 // fix YEP's awful UX - select enemy, mouse and keyboard
+
+// YEP ????
+try{
+(()=>{ let k,r,t;
+
+new cfc(Sprite_Enemy.prototype).addBase('updateScale',function(){
+	this.scale.x=this._enemy.spriteScaleX();
+	this.scale.y=this._enemy.spriteScaleY();
+});
+
+})();
+}catch(e){
+}
+// YEP ????
 
 // 拿道具+++
 try{

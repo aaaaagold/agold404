@@ -876,6 +876,35 @@ p.jumpFacingRelative=function(leftRight,backFront){
 }
 // Game_Character.JUMP
 
+// actor paramMax
+try{
+(()=>{ let k,r,t;
+
+new cfc(Scene_Boot.prototype).add('start',function f(){
+	$dataActors.forEach(f.tbl[0]);
+	return f.ori.apply(this,arguments);
+},[
+dataobj=>{
+	const meta=dataobj&&dataobj.meta; if(!meta) return;
+	if(meta.paramMax) dataobj.paramMax=JSON.parse(meta.paramMax);
+},
+]);
+
+new cfc(Game_Actor.prototype).add('paramBase',function f(){
+	return f.ori.apply(this,arguments) + Game_Battler.prototype.paramPlus.apply(this,arguments);
+}).add('paramPlus',function f(){
+	return f.ori.apply(this,arguments) - Game_Battler.prototype.paramPlus.apply(this,arguments);
+}).add('paramMax',function f(paramId){
+	const data=this.getData();
+	if(data && data.paramMax && paramId in data.paramMax) return data.paramMax[paramId];
+	return f.ori.apply(this,arguments);
+});
+
+})();
+}catch(e){
+}
+// actor paramMax
+
 // fix Window_合成_list bug
 try{
 (()=>{ let k,r,t;

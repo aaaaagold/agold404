@@ -834,6 +834,61 @@ p[k].tbl=[t,];
 }
 // reduce refresh
 
+// Game_Character.JUMP
+try{
+(()=>{ let k,r,t;
+
+const p=Game_Character.prototype;
+(p.rightPos=function f(x,y){
+	if(x===undefined) x=this.x;
+	if(y===undefined) y=this.y;
+	const d=f.tbl[0][this.direction()];
+	x = $gameMap.roundXWithDirection(x, d);
+	y = $gameMap.roundYWithDirection(y, d);
+	return {x:x,y:y};
+}).tbl=[
+({
+2:4,
+4:8,
+8:6,
+6:2,
+}),
+];
+p.jumpFacingRelative=function(leftRight,backFront){
+	// -+ , -+
+	let dx=0,dy=0;
+	if((leftRight|=0)){
+		const xy=this.rightPos();
+		dx+=(xy.x-this.x)*leftRight;
+		dy+=(xy.y-this.y)*leftRight;
+	}
+	if((backFront|=0)){
+		const xy=this.frontPos();
+		dx+=(xy.x-this.x)*backFront;
+		dy+=(xy.y-this.y)*backFront;
+	}
+	this.jump(dx,dy);
+	return this;
+};
+
+})();
+}catch(e){
+}
+// Game_Character.JUMP
+
+// fix Window_合成_list bug
+try{
+(()=>{ let k,r,t;
+
+Window_合成_list.prototype.refreshItemsEnabled=function(){
+	for(let x=this.topIndex(),ende=Math.min(this.maxItems(),this.maxCols()*this.maxRows()+1+x);x<ende;++x) this.redrawItem(x);
+};
+
+})();
+}catch(e){
+}
+// fix Window_合成_list bug
+
 // fix wheel error msg
 try{
 (()=>{ let k,r,t;

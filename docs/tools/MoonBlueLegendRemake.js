@@ -348,12 +348,12 @@ new cfc(Game_Party.prototype).add('絕無城隊伍_init',function f(){
 	let rtv=this._絕無城隊伍_unlockedActors; if(!rtv) rtv=this._絕無城隊伍_unlockedActors=[];
 	return rtv;
 }).add('絕無城隊伍_unlockedActors_add',function f(i){
-	for(let x=arguments.length;x--;) this._絕無城隊伍_unlockedActors.uniquPush(arguments[x]);
+	for(let x=arguments.length;x--;) this._絕無城隊伍_unlockedActors_getCont().uniquePush(arguments[x]);
 	return this;
 }).add('絕無城隊伍_unlockedActors_has',function f(i){
-	return this._絕無城隊伍_unlockedActors.uniquHas(i);
+	return this._絕無城隊伍_unlockedActors_getCont().uniqueHas(i);
 }).add('絕無城隊伍_unlockedActors_unlockAll',function f(){
-	this.絕無城隊伍_unlockedActors_add(this,this.絕無城隊伍_allActors_getAll());
+	this.絕無城隊伍_unlockedActors_add.apply(this,this.絕無城隊伍_allActors_getAll());
 	return this;
 });
 
@@ -540,10 +540,11 @@ function f(dst,src){
 	this._actorSprites=[];
 	this._actorSprites._bmp_chosen=ImageManager.loadNormalBitmap(setting.select.chosen.path);
 	const actorIds=$gameParty.絕無城隊伍_allActors_getAll().sort((a,b)=>a-b);
-	for(let actorId=0,yi=0,xs=setting.actors.cols,ys=setting.actors.rows;yi!==ys;++yi){ for(let xi=0;xi!==xs;++actorId,++xi){
-		const sp=new Sprite(),actrd=$dataActors[actorIds[actorId]];
+	for(let actorIdx=0,yi=0,xs=setting.actors.cols,ys=setting.actors.rows;yi!==ys;++yi){ for(let xi=0;xi!==xs;++actorIdx,++xi){
+		const sp=new Sprite(),actrd=$dataActors[actorIds[actorIdx]];
 		sp._actrd=actrd;
-		sp._id=actorId;
+		sp._idx=actorIdx;
+		sp._id=actorIds[actorIdx];
 		sp.addChild(sp._pickUpSprite=new Sprite(this._selectSprite._bmp_pickUp));
 		sp._pickUpSprite.alpha=0;
 		sp.addChild(sp._chosenSprite=new Sprite(this._actorSprites._bmp_chosen));
@@ -551,7 +552,7 @@ function f(dst,src){
 		sp._chosenSprite.position.set(setting.select.chosen.x,setting.select.chosen.y);
 		this._actorSprites.push(sp);
 		this._actorRootSprite.addChild(sp);
-		if(!actrd) continue;
+		if(!actrd||!$gameParty.絕無城隊伍_unlockedActors_has(sp._id)) continue;
 		const isBig=ImageManager.isBigCharacter(actrd.characterName);
 		const bmp=ImageManager.loadCharacter(actrd.characterName);
 		bmp._isBig=isBig;

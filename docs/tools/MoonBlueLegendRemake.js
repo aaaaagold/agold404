@@ -456,6 +456,7 @@ select:{
  chosen:{path:"",x:0,y:0,},
 },
 parties:{
+ path:null,
  x:0,
  y:333,
  w:null,h:null,
@@ -470,6 +471,15 @@ parties:{
  available:{path:"",},
  _done:false, // reserved
  _hasChanged:false, // reserved
+},
+ability:{
+ path:null,
+ x:555,
+ x:222,
+ rows:4,
+ cols:2,
+ innerWidth:126,
+ innerHeight:42,
 },
 }, // 1: default setting
 function f(dst,src){
@@ -573,6 +583,24 @@ function f(dst,src){
 	this.update_moveSprites_select_updateDestination();
 	this._delayFramesCurr=0;
 	
+	{
+	const tmp=new Window_Base(0,0,1,1);
+	const pad=tmp.standardPadding();
+	const pad2=pad<<1;
+	this.addChild(this._windowAbility=new Window_Base(
+		0,0,
+		pad2+this._setting.ability.cols*this._setting.ability.innerWidth,
+		pad2+this._setting.ability.rows*this._setting.ability.innerHeight,
+	));
+	this._windowAbility.position.set(
+		this._setting.ability.x-pad,
+		this._setting.ability.y-pad,
+	);
+	this._windowAbility._windowBackSprite.visible=
+	this._windowAbility._windowFrameSprite.visible=
+	false;
+	}
+	
 	this.addChild(this._windowAnswer=new Window_絕無城_確認隊伍配置());
 	this._windowAnswer.createContents();
 	this._windowAnswer.refresh();
@@ -597,6 +625,7 @@ function f(dst,src){
 	this.update_moveSprites_parties();
 	this.update_moveSprites_select();
 	this.update_moveSprites_confirm();
+	this.update_moveSprites_ability();
 }).add('update_changeViaInput',function f(){
 	const func=this[f.tbl[0][this._state]];
 	if(func) func.apply(this,arguments);
@@ -708,7 +737,30 @@ function(sp,i,a){
 	}
 	this._confirmSprite._ctr|=0; ++this._confirmSprite._ctr; this._confirmSprite._ctr%=this._setting.confirm.blinkFrames;
 	this._confirmSprite.alpha=(Math.sin((this._confirmSprite._ctr/this._setting.confirm.blinkFrames)*Math.PI)+1.0)/2;
-}).add('update_changeViaInput_actors',function f(){
+}).add('update_getCurrentActor',function f(){
+	let actorSprite;
+	if(this._state==='parties') actorSprite=this._actorSprites[this._parties[this._partyIndex[1]][this._partyIndex[0]]];
+	if(!actorSprite) actorSprite=this._actorSprites[this._actorIndex];
+	if(actorSprite && actorSprite._actorSprite) return $gameActors.actor(actorSprite._id);
+}).add('update_moveSprites_ability',function f(){
+	const actr=this.update_getCurrentActor()||undefined;
+	if(this._windowAbility._lastActor===actr) return;
+	this._windowAbility._lastActor=actr;
+	this._windowAbility.createContents();
+	if(!actr) return;
+	const pad=this._windowAbility.standardPadding(),pad2=pad<<1,tpad=this._windowAbility.textPadding(),ys=this._setting.ability.rows,xs=this._setting.ability.cols;
+	for(let y=0,paramIdx=0;y!==ys;++y){ for(let x=0;x!==xs;++paramIdx,++x){
+		this._windowAbility.drawText(
+			''+actr.param(paramIdx),
+			x*this._setting.ability.innerWidth,
+			y*this._setting.ability.innerHeight,
+			this._setting.ability.innerWidth-pad2,
+			'right'
+		);
+	} }
+},[
+8,
+]).add('update_changeViaInput_actors',function f(){
 	if(f.tbl[0].apply(this,arguments)) return this.onSelectActor(this._actorIndex);
 	if(f.tbl[1].apply(this,arguments)){
 		this._state='confirm';
@@ -890,6 +942,7 @@ key=>Input.isTriggered(key)||Input.isLongPressed(key), // 0: trigger key
 	this._windowAnswer.activate();
 	this._windowHint.close();
 }).add('onAnswer_exit',function f(){
+	this._updateParties=false;
 	this._windowAnswer.close();
 	this.popScene();
 });

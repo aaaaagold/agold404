@@ -318,6 +318,588 @@ new cfc(Sprite_Animation.prototype).add('setup',function f(target, anid, mirror,
 })(); // ==== gugugu END ==== 
 
 
+// 絕無城
+try{
+(()=>{ let k,r,t,o,ti0,ti1;
+
+new cfc(Game_Party.prototype).add('絕無城隊伍_init',function f(){
+	this._絕無城隊伍_partyCnt=this._絕無城隊伍_partyCnt-0||1;
+	this._絕無城隊伍_selects=[];
+	return this;
+}).add('絕無城隊伍_partyCnt_get',function f(){
+	return this._絕無城隊伍_partyCnt;
+}).add('絕無城隊伍_partyCnt_set',function f(val){
+	this._絕無城隊伍_partyCnt=val;
+	return this;
+}).add('絕無城隊伍_selects_get',function f(){
+	return this._絕無城隊伍_selects;
+}).add('絕無城隊伍_selects_set',function f(val){
+	this._絕無城隊伍_selects=val;
+	return this;
+}).add('_絕無城隊伍_allActors_getCont',function f(i){
+	let rtv=this._絕無城隊伍_allActors; if(!rtv) rtv=this._絕無城隊伍_allActors=[];
+	return rtv;
+}).add('絕無城隊伍_allActors_add',function f(i){
+	for(let x=arguments.length;x--;) this._絕無城隊伍_allActors_getCont().uniquePush(arguments[x]);
+	return this;
+}).add('絕無城隊伍_allActors_getAll',function f(){
+	return this._絕無城隊伍_allActors_getCont().slice();
+}).add('_絕無城隊伍_unlockedActors_getCont',function f(i){
+	let rtv=this._絕無城隊伍_unlockedActors; if(!rtv) rtv=this._絕無城隊伍_unlockedActors=[];
+	return rtv;
+}).add('絕無城隊伍_unlockedActors_add',function f(i){
+	for(let x=arguments.length;x--;) this._絕無城隊伍_unlockedActors.uniquPush(arguments[x]);
+	return this;
+}).add('絕無城隊伍_unlockedActors_has',function f(i){
+	return this._絕無城隊伍_unlockedActors.uniquHas(i);
+}).add('絕無城隊伍_unlockedActors_unlockAll',function f(){
+	this.絕無城隊伍_unlockedActors_add(this,this.絕無城隊伍_allActors_getAll());
+	return this;
+});
+
+new cfc(ImageManager).add('loadNormalBitmap',function f(){
+	if(!arguments[0]) return ImageManager.loadEmptyBitmap();
+	return f.ori.apply(this,arguments);
+});
+
+{
+const a=class Window_絕無城_確認隊伍配置 extends Window_Command{
+initialize(){
+	Window_Command.prototype.initialize.call(this,0,0);
+	this._initDone=true;
+	this.clearCommandList();
+	this.makeCommandList();
+	this.width=this.windowWidth();
+	this.openness=0;
+}
+windowWidth(){
+	if(!this._list||!this._list.length||!this._windowContentsSprite) return Graphics.boxWidth;
+	let base=(this.textPadding()<<1)|1,curr=0;
+	for(let x=0,xs=this._list.length;x!==xs;++x) curr=Math.max(this.textWidthEx(this._list[x].name),curr);
+	return base+curr;
+}
+makeCommandList(){
+	if(this._initDone){
+		this.addCommand("\\STYLEDTEXT.\\TXTCENTER:\"確認\"", 'ok');
+		this.addCommand("\\STYLEDTEXT.\\TXTCENTER:\"取消\"", 'cancel');
+		this.addCommand("\\STYLEDTEXT.\\TXTCENTER:\"不更新離開\"", 'exit');
+	}else{
+		this.addCommand("確認", 'ok');
+		this.addCommand("取消", 'cancel');
+		this.addCommand("不更新離開", 'exit');
+	}
+}
+};
+a.ori=Window_Command;
+window[a.name]=a;
+const p=a.prototype;
+}
+
+{
+const a=class Scene_絕無城_組隊介面 extends Scene_MenuBase{
+};
+a.ori=Scene_MenuBase;
+window[a.name]=a;
+const p=a.prototype;
+new cfc(p).add('initialize',function f(){
+	const rtv=f.tbl[0][f._funcName].apply(this,arguments);
+	this.initialize_loadSetting();
+	this._state='actors';
+	this._actorIndex=0;
+	this._partyIndex=[0,0];
+	this._parties=[];
+	this._updateParties=false;
+	this._actorIdxToPartyIdx={};
+	return rtv;
+},o=[
+a.ori.prototype,
+function f(arr){
+	while(arr.length && !(arr.back+''-0>=0)) arr.pop();
+	const rtv=[];
+	for(let x=0,xs=arr.length;x!==xs;++x){
+		const idx=arr[x];
+		const sp=this._actorSprites[idx];
+		const actorId=sp&&sp._actrd&&sp._actrd.id;
+		if(actorId) rtv.push(actorId);
+	}
+	return rtv;
+}, // 1: map actorIdx to actorId
+]).add('terminate',function f(){
+	const rtv=f.tbl[0][f._funcName].apply(this,arguments);
+	if(this._updateParties){
+		$gameParty.絕無城隊伍_selects_set(this._parties.map(f.tbl[1],this));
+	}
+	return rtv;
+},o).add('initialize_loadSetting',function f(){
+	ImageManager.otherFiles_addLoad(f.tbl[0]);
+},t=[
+'BLR_custom/dlc/絕無城-組隊介面.txt', // 0: conf path
+{
+main:{path:"",x:0,y:0,w:null,h:null,rows:null,cols:null,},
+confirm:{path:"",x:64,y:500,blinkFrames:32,},
+actors:{
+ path:null,
+ x:0,y:100,w:null,h:null,
+ rows:2,
+ cols:6,
+ innerWidth:74,
+ innerHeight:89,
+},
+select:{
+ smooth:false,
+ blinkFrames:64,
+ delayFrames:8,
+ rectW:64,
+ rectH:64,
+ pointTo:{fillColor:"rgba(255,255,255,0.5)",},
+ pickUp:{fillColor:"rgba(0,255,255,0.75)",},
+ chosen:{path:"",x:0,y:0,},
+},
+parties:{
+ x:0,
+ y:333,
+ w:null,h:null,
+ rows:3,
+ cols:1,
+ innerOffsetX:64,
+ innerOffsetY:0,
+ innerWidth:64,
+ innerHeight:64,
+ maxMembers:4,
+ locked:{path:"",},
+ available:{path:"",},
+ _done:false, // reserved
+ _hasChanged:false, // reserved
+},
+}, // 1: default setting
+function f(dst,src){
+	for(let k in src){
+		if(!(k in dst)) dst[k]=src[k];
+		else if(src[k] instanceof Object) dst[k]=f({},src[k]);
+		else dst[k]=src[k];
+	}
+	return dst;
+}, // 2: merge json
+]).add('create',function f(){
+	const rtv=f.tbl[0][f._funcName].apply(this,arguments);
+	this.createMain();
+	return rtv;
+},o).add('_setChrFrm',function f(isBig,bmp,sp,idx,rtv){
+	const iw=~~(isBig?bmp.width/1:bmp.width/4);
+	const ih=~~(isBig?bmp.height/1:bmp.height/2);
+	const pw=~~(iw/3);
+	const ph=~~(ih/4);
+	if(isBig) sp.setFrame(pw,0,pw,ph);
+	else sp.setFrame(iw*(idx&3)+pw,ih*(idx>>>2),pw,ph);
+	if(rtv){
+		rtv.iw=iw;
+		rtv.ih=ih;
+		rtv.pw=pw;
+		rtv.ph=ph;
+	}
+}).add('createMain',function f(){
+	const setting=this._setting=f.tbl[2](JSON.parse(JSON.stringify(f.tbl[1])),JSON.parse(ImageManager.otherFiles_getData(f.tbl[0])||"{}"));
+	if(setting.parties.maxMembers===undefined) setting.parties.maxMembers=$gameParty.maxBattleMembers();
+	
+	this.addChild(this._mainSprite=new Sprite(ImageManager.loadNormalBitmap(setting.main.path)));
+	this._mainSprite.position.set(setting.main.x,setting.main.y);
+	
+	this.addChild(this._confirmSprite=new Sprite(ImageManager.loadNormalBitmap(setting.confirm.path)));
+	this._confirmSprite.position.set(setting.confirm.x,setting.confirm.y);
+	
+	this.addChild(this._partyRootSprite=new PIXI.Container());
+	this._partyRootSprite.position.set(setting.parties.x,setting.parties.y);
+	this._partySprites=[];
+	this._partySprites._bmp_locked=ImageManager.loadNormalBitmap(setting.parties.locked.path);
+	this._partySprites._bmp_available=ImageManager.loadNormalBitmap(setting.parties.available.path);
+	const ende=$gameParty.絕無城隊伍_partyCnt_get()-0;
+	for(let partyId=0,y=0,xs=setting.parties.cols,ys=setting.parties.rows;y!==ys;++y){ for(let x=0;x!==xs;++partyId,++x){
+		if(partyId<ende) this._parties[partyId]=[];
+		const sp=new Sprite(partyId<ende?this._partySprites._bmp_available:this._partySprites._bmp_locked);
+		sp._id=partyId;
+		this._partySprites.push(sp);
+		this._partyRootSprite.addChild(sp);
+		sp.addChild(sp._membersRoot=new Sprite());
+		sp._memberSprites=[];
+		sp._membersRoot.position.set(this._setting.parties.innerOffsetX,this._setting.parties.innerOffsetY,);
+		for(let m=0,ms=setting.parties.maxMembers,lastSprite;m!==ms;++m){
+			const a=new Sprite();
+			if(m) a.position.set(lastSprite.x+this._setting.parties.innerWidth,lastSprite.y);
+			sp._memberSprites.push(a);
+			sp._membersRoot.addChild(a);
+			lastSprite=a;
+		}
+	} }
+	
+	this.addChild(this._selectSprite=new Sprite());
+	(this._selectSprite._bmp_pointTo=new Bitmap(setting.select.rectW,setting.select.rectH)).fillAll(setting.select.pointTo.fillColor);
+	(this._selectSprite._bmp_pickUp=new Bitmap(setting.select.rectW,setting.select.rectH)).fillAll(setting.select.pickUp.fillColor);
+	
+	this.addChild(this._actorRootSprite=new PIXI.Container());
+	this._actorRootSprite.position.set(setting.actors.x,setting.actors.y);
+	this._actorSprites=[];
+	this._actorSprites._bmp_chosen=ImageManager.loadNormalBitmap(setting.select.chosen.path);
+	const actorIds=$gameParty.絕無城隊伍_allActors_getAll().sort((a,b)=>a-b);
+	for(let actorId=0,yi=0,xs=setting.actors.cols,ys=setting.actors.rows;yi!==ys;++yi){ for(let xi=0;xi!==xs;++actorId,++xi){
+		const sp=new Sprite(),actrd=$dataActors[actorIds[actorId]];
+		sp._actrd=actrd;
+		sp._id=actorId;
+		sp.addChild(sp._pickUpSprite=new Sprite(this._selectSprite._bmp_pickUp));
+		sp._pickUpSprite.alpha=0;
+		sp.addChild(sp._chosenSprite=new Sprite(this._actorSprites._bmp_chosen));
+		sp._chosenSprite.alpha=0;
+		sp._chosenSprite.position.set(setting.select.chosen.x,setting.select.chosen.y);
+		this._actorSprites.push(sp);
+		this._actorRootSprite.addChild(sp);
+		if(!actrd) continue;
+		const isBig=ImageManager.isBigCharacter(actrd.characterName);
+		const bmp=ImageManager.loadCharacter(actrd.characterName);
+		bmp._isBig=isBig;
+		sp.addChild(sp._actorSprite=new Sprite(bmp));
+		const x=xi,y=yi;
+		bmp.addLoadListener(()=>{
+			const res={}; this._setChrFrm(isBig,bmp,sp._actorSprite,actrd.characterIndex,res);
+			sp._actorSprite.position.set(
+				(setting.select.rectW-res.pw)>>1,
+				(setting.select.rectH-res.ph)>>1,
+			);
+			sp.position.set(
+				x*setting.actors.innerWidth,
+				y*setting.actors.innerHeight,
+			);
+		});
+	} }
+	this.update_moveSprites_select_updateDestination();
+	this._delayFramesCurr=0;
+	
+	this.addChild(this._windowAnswer=new Window_絕無城_確認隊伍配置());
+	this._windowAnswer.createContents();
+	this._windowAnswer.refresh();
+	this._windowAnswer.position.set(
+		(Graphics.boxWidth-this._windowAnswer.width)>>1,
+		(Graphics.boxHeight-this._windowAnswer.height)>>1,
+	);
+	this._windowAnswer.setHandler('ok',this.onAnswer_ok.bind(this));
+	this._windowAnswer.setHandler('cancel',this.onAnswer_cancel.bind(this));
+	this._windowAnswer.setHandler('exit',this.onAnswer_exit.bind(this));
+	this.addChild(this._windowHint=new Window_Help(4));
+	this._windowHint.openness=0;
+	this._windowHint.setText("\n\\TXTCENTER:\"是否更新成目前的隊伍配置？\"");
+	this._windowHint.y=Graphics.boxHeight-this._windowHint.height;
+},t).add('update',function f(){
+	const rtv=f.tbl[0][f._funcName].apply(this,arguments);
+	this.update_changeViaInput();
+	this.update_moveSprites();
+	return rtv;
+},o).add('update_moveSprites',function f(){
+	this.update_moveSprites_actors();
+	this.update_moveSprites_parties();
+	this.update_moveSprites_select();
+	this.update_moveSprites_confirm();
+}).add('update_changeViaInput',function f(){
+	const func=this[f.tbl[0][this._state]];
+	if(func) func.apply(this,arguments);
+},[
+{
+actors:'update_changeViaInput_actors',
+parties:'update_changeViaInput_parties',
+confirm:'update_changeViaInput_confirm',
+},
+]).add('update_moveSprites_actors',function f(){
+}).add('update_moveSprites_parties',function f(){
+	if(!this._setting.parties._done){
+		if(!this._partySprites._bmp_locked.isReady()||!this._partySprites._bmp_available.isReady()) return;
+		this._setting.parties._hasChanged=false;
+		this._partySprites.forEach(f.tbl[0],this._setting.parties);
+		this._setting.parties._done=!this._setting.parties._hasChanged;
+	}
+},[
+function(sp,i,a){
+	const yi=~~(i/this.cols);
+	const xi=i%this.cols;
+	const x=xi*(this.innerOffsetX+this.innerWidth*(this.maxMembers-1));
+	const y=yi*(this.innerOffsetY+this.innerHeight);
+	if(sp.x===x&&sp.y===y) return;
+	sp.position.set(x,y);
+	this._hasChanged=true;
+}, // 0: forEach
+]).add('update_moveSprites_select',function f(){
+	this.update_moveSprites_select_actors();
+	this.update_moveSprites_select_parties();
+	if(this._state==='confirm') return;
+	this._selectSprite._ctr|=0; ++this._selectSprite._ctr; this._selectSprite._ctr%=this._setting.select.blinkFrames;
+	this._selectSprite.alpha=(Math.sin((this._selectSprite._ctr/this._setting.select.blinkFrames)*Math.PI*2)+3.0)/4;
+}).add('update_moveSprites_select_actors',function f(){
+	if(this._state!=='actors') return;
+	let y=~~(this._actorIndex/this._setting.actors.cols);
+	let x=~~(this._actorIndex%this._setting.actors.cols);
+	this._selectSprite.bitmap=this._selectSprite._selected?this._selectSprite._bmp_pickUp:this._selectSprite._bmp_pointTo;
+	if(this._selectSprite._nextXY&&this._selectSprite._currXY){
+		if(this._setting.select.smooth&&0<--this._delayFramesCurr){
+			const r=Math.cos(this._delayFramesCurr/this._setting.select.delayFrames*Math.PI/2);
+			this._selectSprite.position.set(
+				this._selectSprite._nextXY[0]*r+this._selectSprite._currXY[0]*(1-r),
+				this._selectSprite._nextXY[1]*r+this._selectSprite._currXY[1]*(1-r),
+			);
+		}else{
+			this._delayFramesCurr=0;
+			this._selectSprite.position.set(
+				this._selectSprite._nextXY[0],
+				this._selectSprite._nextXY[1],
+			);
+			this._selectSprite._currXY=
+			this._selectSprite._nextXY=
+			undefined;
+		}
+	}
+}).add('update_moveSprites_select_parties',function f(){
+	if(this._state!=='parties') return;
+	let y=~~(this._actorIndex/this._setting.actors.cols);
+	let x=~~(this._actorIndex%this._setting.actors.cols);
+	this._selectSprite.bitmap=this._selectSprite._bmp_pointTo;
+	if(this._selectSprite._nextXY&&this._selectSprite._currXY){
+		if(this._setting.select.smooth&&0<--this._delayFramesCurr){
+			const r=Math.cos(this._delayFramesCurr/this._setting.select.delayFrames*Math.PI/2);
+			this._selectSprite.position.set(
+				this._selectSprite._nextXY[0]*r+this._selectSprite._currXY[0]*(1-r),
+				this._selectSprite._nextXY[1]*r+this._selectSprite._currXY[1]*(1-r),
+			);
+		}else{
+			this._delayFramesCurr=0;
+			this._selectSprite.position.set(
+				this._selectSprite._nextXY[0],
+				this._selectSprite._nextXY[1],
+			);
+			this._selectSprite._currXY=
+			this._selectSprite._nextXY=
+			undefined;
+		}
+	}
+}).add('update_moveSprites_select_updateDestinationCommon',function f(newX,newY){
+	this._delayFramesCurr=this._setting.select.delayFrames;
+	this._selectSprite._currXY=[
+		this._selectSprite.x,
+		this._selectSprite.y,
+	];
+	this._selectSprite._nextXY=[newX,newY];
+}).add('update_moveSprites_select_updateDestination',function f(){
+	this.update_moveSprites_select_updateDestination_actors();
+	this.update_moveSprites_select_updateDestination_parties();
+}).add('update_moveSprites_select_updateDestination_actors',function f(){
+	if(this._state!=='actors') return;
+	const y=~~(this._actorIndex/this._setting.actors.cols);
+	const x=~~(this._actorIndex%this._setting.actors.cols);
+	this.update_moveSprites_select_updateDestinationCommon(
+		this._setting.actors.innerWidth*x+this._setting.actors.x,
+		this._setting.actors.innerHeight*y+this._setting.actors.y,
+	);
+}).add('update_moveSprites_select_updateDestination_parties',function f(){
+	if(this._state!=='parties') return;
+	const ps=this._partySprites[this._partyIndex[1]];
+	const ref=ps&&ps._memberSprites&&ps._memberSprites[this._partyIndex[0]];
+	const p=this._selectSprite.parent; if(!p||!ref) return;
+	const xy=p.toLocal(ref,ref.parent);
+	this.update_moveSprites_select_updateDestinationCommon(xy.x,xy.y,);
+}).add('update_moveSprites_confirm',function f(){
+	if(this._state!=='confirm'){
+		this._confirmSprite.alpha=1;
+		return;
+	}
+	this._confirmSprite._ctr|=0; ++this._confirmSprite._ctr; this._confirmSprite._ctr%=this._setting.confirm.blinkFrames;
+	this._confirmSprite.alpha=(Math.sin((this._confirmSprite._ctr/this._setting.confirm.blinkFrames)*Math.PI)+1.0)/2;
+}).add('update_changeViaInput_actors',function f(){
+	if(f.tbl[0].apply(this,arguments)) return this.onSelectActor(this._actorIndex);
+	if(f.tbl[1].apply(this,arguments)){
+		this._state='confirm';
+		this.update_moveSprites_select_updateDestination();
+		SoundManager.playCancel();
+		return;
+	}
+	const idx=this._actorIndex;
+	if(!(this.update_changeViaInput_actors_arrows()<0)){ if(idx!==this._actorIndex){
+		this.update_moveSprites_select_updateDestination();
+		SoundManager.playCursor();
+	} return; }
+},ti0=[
+function(){
+	if(!Input.isTriggered('ok')) return;
+	return true;
+}, // 0: press ok
+function(){
+	if(!Input.isTriggered('cancel')) return;
+	return true;
+}, // 1: press cancel
+]).add('update_changeViaInput_actors_arrows',function f(){
+	if(f.tbl[0]('left')){
+		if(this._actorIndex%this._setting.actors.cols) --this._actorIndex;
+		else this._actorIndex+=this._setting.actors.cols-1;
+		return;
+	}
+	if(f.tbl[0]('right')){
+		if((this._actorIndex+1)%this._setting.actors.cols) ++this._actorIndex;
+		else this._actorIndex-=this._setting.actors.cols-1;
+		return;
+	}
+	if(f.tbl[0]('up')){
+		if(this._actorIndex/this._setting.actors.cols>=1) this._actorIndex-=this._setting.actors.cols;
+		else this._actorIndex+=this._setting.actors.cols*this._setting.actors.rows-this._setting.actors.cols;
+		return;
+	}
+	if(f.tbl[0]('down')){
+		if((this._actorIndex/this._setting.actors.cols)+1<this._setting.actors.rows) this._actorIndex+=this._setting.actors.cols;
+		else this._actorIndex-=this._setting.actors.cols*this._setting.actors.rows-this._setting.actors.cols;
+		return;
+	}
+	return -1;
+},ti1=[
+key=>Input.isTriggered(key)||Input.isLongPressed(key), // 0: trigger key
+]).add('onSelectActor',function f(){
+	if(!this._actorSprites[this._actorIndex]._actorSprite){
+		SoundManager.playBuzzer();
+		return;
+	}
+	this._state='parties';
+	this._actorSprites[this._actorIndex]._pickUpSprite.alpha=1;
+	//this._selectSprite.bitmap=this._selectSprite.
+	this.update_moveSprites_select_updateDestination();
+	SoundManager.playOk();
+}).add('update_changeViaInput_parties',function f(){
+	if(f.tbl[0].apply(this,arguments)) return this.onSelectParty(this._actorIndex);
+	if(f.tbl[1].apply(this,arguments)){
+		this._state='actors';
+		this._actorSprites[this._actorIndex]._pickUpSprite.alpha=0;
+		this.update_moveSprites_select_updateDestination();
+		SoundManager.playCancel();
+		return;
+	}
+	const idxv=this._partyIndex.slice();
+	if(!(this.update_changeViaInput_parties_arrows()<0)){ if(idxv[0]!==this._partyIndex[0]||idxv[1]!==this._partyIndex[1]){
+		this.update_moveSprites_select_updateDestination();
+		SoundManager.playCursor();
+	} return; }
+},ti0).add('update_changeViaInput_parties_arrows',function f(){
+	if(f.tbl[0]('left')){
+		if(this._partyIndex[0]) --this._partyIndex[0];
+		else this._partyIndex[0]+=this._setting.parties.maxMembers-1;
+		return;
+	}
+	if(f.tbl[0]('right')){
+		if(this._partyIndex[0]+1<this._setting.parties.maxMembers) ++this._partyIndex[0];
+		else this._partyIndex[0]-=this._setting.parties.maxMembers-1;
+		return;
+	}
+	if(f.tbl[0]('up')){
+		if(this._partyIndex[1]) --this._partyIndex[1];
+		else this._partyIndex[1]+=$gameParty.絕無城隊伍_partyCnt_get()-1;
+		return;
+	}
+	if(f.tbl[0]('down')){
+		const pcnt=$gameParty.絕無城隊伍_partyCnt_get();
+		if(this._partyIndex[1]+1<pcnt) ++this._partyIndex[1];
+		else this._partyIndex[1]-=pcnt-1;
+		return;
+	}
+	return -1;
+},ti1).add('onSelectParty',function f(){
+	this._state='actors';
+	const lastLoc=this._actorIdxToPartyIdx[this._actorIndex];
+	const currLoc=this._partyIndex;
+	const actorSelectSprite=this._actorSprites[this._actorIndex];
+	if(currLoc.equals(lastLoc)){
+		// del
+		delete this._actorIdxToPartyIdx[this._actorIndex];
+		this.onSelectParty_setActor(currLoc,undefined);
+		actorSelectSprite._chosenSprite.alpha=0;
+	}else{
+		// swap
+		const lastActorIdx=this._parties[currLoc[1]][currLoc[0]];
+		if(lastActorIdx>=0 && !lastLoc){
+			delete this._actorIdxToPartyIdx[lastActorIdx];
+			this._actorSprites[lastActorIdx]._chosenSprite.alpha=0;
+		}
+		this.onSelectParty_setActor(lastLoc,lastActorIdx);
+		this.onSelectParty_setActor(currLoc,this._actorIndex);
+		actorSelectSprite._chosenSprite.alpha=1;
+	}
+	actorSelectSprite._pickUpSprite.alpha=0;
+	this.update_moveSprites_select_updateDestination();
+	SoundManager.playOk();
+}).add('onSelectParty_setActor',function f(partyIdx,actorIdx){
+	// not considering: dst already having someone
+	if(!partyIdx) return;
+	const partyActorSprite=this._partySprites[partyIdx[1]]._memberSprites[partyIdx[0]];
+	const actorSelectSprite=this._actorSprites[actorIdx];
+	if(actorSelectSprite){
+		this._actorIdxToPartyIdx[actorIdx]=partyIdx.slice();
+		this._parties[partyIdx[1]][partyIdx[0]]=actorIdx;
+		const bmp=partyActorSprite.bitmap=actorSelectSprite._actorSprite.bitmap;
+		bmp.addLoadListener(()=>{
+			const res={}; this._setChrFrm(bmp._isBig,bmp,partyActorSprite,actorSelectSprite._actrd.characterIndex,res);
+			partyActorSprite.anchor.set(
+				-((this._setting.select.rectW-res.pw)>>1)/res.pw,
+				-((this._setting.select.rectH-res.ph)>>1)/res.ph,
+			);
+		});
+	}else{
+		//this._actorIdxToPartyIdx[actorIdx]=partyIdx.slice();
+		this._parties[partyIdx[1]][partyIdx[0]]=undefined;
+		partyActorSprite.bitmap=null;
+	}
+}).add('update_changeViaInput_confirm',function f(){
+	if(f.tbl[0].apply(this,arguments)){
+		this._state='answer';
+		this._windowAnswer.refresh();
+		this._windowAnswer.select(0);
+		this._windowAnswer.open();
+		this._windowHint.open();
+		SoundManager.playOk();
+		return;
+	}
+	if(f.tbl[1].apply(this,arguments)){
+		this._state='answer';
+		this._windowAnswer.refresh();
+		this._windowAnswer.select(1);
+		this._windowAnswer.open();
+		this._windowHint.open();
+		SoundManager.playCancel();
+		return;
+	}
+	if(!(this.update_changeViaInput_confirm_arrows()<0)){
+		this.update_moveSprites_select_updateDestination();
+		SoundManager.playCursor();
+		return;
+	}
+},ti0).add('update_changeViaInput_confirm_arrows',function f(){
+	if(f.tbl[0]('up')){
+		this._state='parties';
+		return;
+	}
+	if(f.tbl[0]('down')){
+		this._state='actors';
+		return;
+	}
+	return -1;
+},ti1).add('onAnswer_ok',function f(){
+	this._updateParties=true;
+	this._windowAnswer.close();
+	this.popScene();
+}).add('onAnswer_cancel',function f(){
+	this._state='actors';
+	this._windowAnswer.close();
+	this._windowAnswer.activate();
+	this._windowHint.close();
+}).add('onAnswer_exit',function f(){
+	this._windowAnswer.close();
+	this.popScene();
+});
+} // Scene_絕無城_組隊介面
+
+})();
+}catch(e){
+}
+// 絕無城
+
+
 (()=>{ // ==== bye ==== 
 
 

@@ -481,6 +481,23 @@ ability:{
  innerWidth:126,
  innerHeight:42,
 },
+equips:{
+ path:null,
+ x:555,
+ x:222,
+ rows:5,
+ cols:1,
+ innerWidth:126,
+ innerHeight:42,
+},
+face:{
+ path:"",
+ x:555,
+ y:111,
+ textOffsetX:0,
+ textOffsetY:89,
+ centerX:false,
+},
 }, // 1: default setting
 function f(dst,src){
 	for(let k in src){
@@ -601,6 +618,54 @@ function f(dst,src){
 	false;
 	}
 	
+	{
+	const tmp=new Window_Base(0,0,1,1);
+	const pad=tmp.standardPadding();
+	const pad2=pad<<1;
+	this.addChild(this._windowEquips=new Window_Base(
+		0,0,
+		pad2+this._setting.equips.cols*this._setting.equips.innerWidth,
+		pad2+this._setting.equips.rows*this._setting.equips.innerHeight,
+	));
+	this._windowEquips.position.set(
+		this._setting.equips.x-pad,
+		this._setting.equips.y-pad,
+	);
+	this._windowEquips._windowBackSprite.visible=
+	this._windowEquips._windowFrameSprite.visible=
+	false;
+	}
+	
+	this.addChild(this._faceSprite=new Sprite());
+	this._faceSprite.position.set(
+		this._setting.face.x,
+		this._setting.face.y,
+	);
+	this._faceSprite._bmp_noActor=this._setting.face.path?ImageManager.loadNormalBitmap(this._setting.face.path):null;
+	{
+	const tmp=new Window_Base(0,0,1,1);
+	const pad=tmp.standardPadding();
+	const pad2=pad<<1;
+	this._faceSprite.addChild(this._faceSprite._actorNameWindow=new Window_Base(
+		0,0,
+		256,
+		128,
+	));
+	if(this._setting.face.centerX){
+		this._faceSprite.anchor.set(0.5,0);
+		this._faceSprite._actorNameWindow.position.set(
+			this._setting.face.textOffsetX-(this._faceSprite._actorNameWindow.width>>1),
+			this._setting.face.textOffsetY-pad,
+		);
+	}else this._faceSprite._actorNameWindow.position.set(
+		this._setting.face.textOffsetX-pad,
+		this._setting.face.textOffsetY-pad,
+	);
+	this._faceSprite._actorNameWindow._windowBackSprite.visible=
+	this._faceSprite._actorNameWindow._windowFrameSprite.visible=
+	false;
+	}
+	
 	this.addChild(this._windowAnswer=new Window_絕無城_確認隊伍配置());
 	this._windowAnswer.createContents();
 	this._windowAnswer.refresh();
@@ -625,7 +690,7 @@ function f(dst,src){
 	this.update_moveSprites_parties();
 	this.update_moveSprites_select();
 	this.update_moveSprites_confirm();
-	this.update_moveSprites_ability();
+	this.update_moveSprites_actorInfo();
 }).add('update_changeViaInput',function f(){
 	const func=this[f.tbl[0][this._state]];
 	if(func) func.apply(this,arguments);
@@ -742,12 +807,18 @@ function(sp,i,a){
 	if(this._state==='parties') actorSprite=this._actorSprites[this._parties[this._partyIndex[1]][this._partyIndex[0]]];
 	if(!actorSprite) actorSprite=this._actorSprites[this._actorIndex];
 	if(actorSprite && actorSprite._actorSprite) return $gameActors.actor(actorSprite._id);
-}).add('update_moveSprites_ability',function f(){
+}).add('update_moveSprites_actorInfo',function f(){
 	const actr=this.update_getCurrentActor()||undefined;
-	if(this._windowAbility._lastActor===actr) return;
-	this._windowAbility._lastActor=actr;
+	if(this._actorInfo_lastActor===actr) return;
+	this._actorInfo_lastActor=actr;
 	this._windowAbility.createContents();
-	if(!actr) return;
+	this._windowEquips.createContents();
+	this._faceSprite._actorNameWindow.createContents();
+	if(!actr){
+		this._faceSprite.bitmap=this._faceSprite._bmp_noActor;
+		return;
+	}
+	{
 	const pad=this._windowAbility.standardPadding(),pad2=pad<<1,tpad=this._windowAbility.textPadding(),ys=this._setting.ability.rows,xs=this._setting.ability.cols;
 	for(let y=0,paramIdx=0;y!==ys;++y){ for(let x=0;x!==xs;++paramIdx,++x){
 		this._windowAbility.drawText(
@@ -758,6 +829,28 @@ function(sp,i,a){
 			'right'
 		);
 	} }
+	}
+	{
+	const pad=this._windowEquips.standardPadding(),pad2=pad<<1,tpad=this._windowEquips.textPadding(),ys=this._setting.equips.rows,xs=this._setting.equips.cols;
+	const equiqs=actr.equips();
+	for(let y=0,itemIdx=0;y!==ys;++y){ for(let x=0;x!==xs;++itemIdx,++x){
+		if(equiqs[itemIdx]) this._windowEquips.drawItemName(
+			equiqs[itemIdx],
+			x*this._setting.equips.innerWidth,
+			y*this._setting.equips.innerHeight,
+			this._setting.equips.innerWidth-pad2
+		);
+	} }
+	}
+	if(ImageManager.loadMenusFaces1){
+		const bmp=ImageManager.loadMenusFaces1("Actor_" + actr._actorId);
+		this._faceSprite.bitmap=bmp;
+	}
+	this._faceSprite._actorNameWindow.drawText(
+		actr.name(),0,0,
+		this._faceSprite._actorNameWindow.width-(this._faceSprite._actorNameWindow.standardPadding()<<1),
+		this._setting.face.centerX?'center':'left'
+	);
 },[
 8,
 ]).add('update_changeViaInput_actors',function f(){

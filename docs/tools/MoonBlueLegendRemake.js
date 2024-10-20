@@ -1414,6 +1414,7 @@ r=p[k]; (p[k]=function f(){
 	const w=window,tw=getTopFrameWindow();
 	
 	if(tw._openResponseForm_opened) return;
+	if(!$dataSystem||$dataSystem.gameTitle!=="月藍傳奇1remake") return;
 	if(!(Math.random()*f.tbl[0]<1)) return;
 	let url="https://docs.google.com/forms/d/e/1FAIpQLSeNj8kwKvZweS1vNNq4pdfKpjijFgidpIqjcKWipeh8lsXA_Q/viewform?usp=pp_url&entry.992516390=插件版本:%20{}%0A%0A";
 	const pluginVer=encodeURIComponent(_agold404_version||"未偵測到");

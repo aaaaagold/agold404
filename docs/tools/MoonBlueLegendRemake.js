@@ -1674,6 +1674,44 @@ r=p[k]; (p[k]=function(){
 }
 // fix wheel error msg
 
+// fix Irina_ActionCutins.js
+try{
+if(_agold404_version>='2024-10-22 0')(()=>{ let k,r; 
+if(typeof TilingSprite_ActionCutin!=='undefined'){ const p=TilingSprite_ActionCutin.prototype;
+TilingSprite_ActionCutin.prototype._tuneOutOfBound=function(){
+	if(Graphics.isWebGL()) return; // seems no problem
+	const face=this._faceSprite;
+	const ffrm=face._frame;
+	if(!ffrm.height) return; // not loaded
+	let tmp;
+	const fsy=face.scale.y;
+	const fy=face.y;
+	tmp=-(this.height*this.anchor.y)-fy;
+	const btop_o=tmp/fsy;
+	const btop=Math.floor(btop_o);
+	const bbtm=Math.ceil((tmp+this.height)/fsy);
+	if(ffrm.height>(tmp=bbtm-btop)){
+		const newH=tmp;
+		const fay=0.5; // face.anchor.y // directly suppose 0.5 due to overwritten
+		const ftop=-ffrm.height*fay;
+		const dytop=btop_o-ftop;
+		face.anchor.y=-btop/newH;
+		tmp=ffrm.y+dytop;
+		const newY=Math.floor(tmp);
+		face.setFrame(ffrm.x,newY,ffrm.width,newH);
+	}
+};
+k='updateFaceScale';
+r=p[k]; (p[k]=function f(){
+	f.ori.apply(this,arguments);
+	this._tuneOutOfBound();
+}).ori=r;
+}
+})();
+}catch(e){
+}
+// fix Irina_ActionCutins.js
+
 // fix YEP's awful UX
 try{
 (()=>{ let k,r,t;

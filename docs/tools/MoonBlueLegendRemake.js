@@ -1484,6 +1484,12 @@ r=p[k]; (p[k]=function f(){
 if(Math.random()<0.875){ p.tinyTitleOnlyMsg_murmur.tbl[1]=[
 [ {loc:"RU",showFrame:444}, "黃金：「徵程式接手。嚴禁台清交者來自虐。\n不含交接，請自行上手。」" ],
 ]; }
+if(Math.random()*64<1){
+p.tinyTitleOnlyMsg_murmur.tbl.push(
+[ {loc:"LU",showFrame:4444}, "還有時間玩？\n去關心\\C[6]立法院\\C[0]在幹嘛，\n\n並\\C[6]假設\\C[0]民進黨是多數時，\n\\C[6]思考\\C[0]這樣修法好不好。\n\n你是選\\C[6]人\\C[0]還是選\\C[6]能\\C[0]？" ],
+[ {loc:"LU",showFrame:4444}, "勿忘\\C[6]SARS\\C[0]時中國對台灣做的事情。" ],
+);
+}
 (p.tinyTitleOnlyMsg_allClear=function f(){
 	if(!ConfigManager.allClear||!(Math.random()*f.tbl[0]<1)) return;
 	const arr=f.tbl[1];

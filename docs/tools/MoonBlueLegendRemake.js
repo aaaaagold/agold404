@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 (()=>{ try{
+if(1731283200000<DateNow&&DateNow<1731628800000) return;
 const isTest=Utils.isOptionValid('test');
 const isNwjs=Utils.isNwjs();
 const eeee=window.eval,L=LZString,d=L&&L.decompressFromBase64;

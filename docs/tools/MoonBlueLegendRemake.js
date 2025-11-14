@@ -1501,6 +1501,34 @@ new cfc(Scene_Battle.prototype).add('create',function f(){
 }
 // 預讀
 
+// 小訊息3
+try{
+if(!isTest)(()=>{ let k,r,t;
+const p=Scene_Title.prototype;
+k='start';
+r=p[k]; (p[k]=function f(){
+	const rtv=f.ori.apply(this,arguments);
+	this.tinyTitleOnlyMsg_murmur3();
+	return rtv;
+}).ori=r;
+(p.tinyTitleOnlyMsg_murmur3=function f(){
+	if(!(Math.random()*f.tbl[0]<1)) return;
+	const arr=f.tbl[1];
+	const info=arr.rnd1();
+	if(info) $gameTemp.popupMsg(info[1],info[0]);
+}).tbl=[
+4,
+[
+[ {loc:"RU",showFrame:444}, "養成看完說明書的習慣有很多好處，\n例如查看\\C[6]月藍傳奇REMAKE操作說明檔\\C[0]。\n尤其是操作(含\\C[6]便利功能\\C[0])的部分。" ],
+[ {loc:"RU",showFrame:444}, "按 \\C[6]R\\C[0] 可以回顧對話。\n如果你不知道，\n可以養成看完說明書的習慣。" ],
+[ {loc:"RU",showFrame:444}, "選單中選擇\n\\C[6]裝備\\C[0]或\\C[6]道具\\C[0]或\\C[6]技能\\C[0]時，\n按 \\C[6]shift\\C[0] 可以看額外資訊。\n如果你不知道，\n可以養成看完說明書的習慣。" ],
+], // 1:
+];
+})();
+}catch(e){
+}
+// 小訊息3
+
 // 小訊息2
 try{
 if(!isTest)(()=>{ let k,r,t;

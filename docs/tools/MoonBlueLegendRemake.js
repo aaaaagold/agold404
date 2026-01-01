@@ -9,6 +9,7 @@ if(window._isHotfixDisabled) return;
 const _agold404_dbg_nwjs=window._agold404_dbg_nwjs;
 const _agold404_version=window._agold404_version;
 const _agold404_isFromCache=window._agold404_isFromCache;
+window.none=()=>{};
 
 const cfc=(()=>{
 const cf=(p,k,f,tbl,is_putDeepest,is_notUsingOri,moduleName)=>{
